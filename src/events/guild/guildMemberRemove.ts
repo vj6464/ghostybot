@@ -1,10 +1,10 @@
-import { Constants, GuildMember, TextChannel } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { GuildMember, TextChannel, Permissions } from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberRemoveEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_MEMBER_REMOVE);
+    super(bot, "guildMemberRemove");
   }
 
   async execute(bot: Bot, member: GuildMember) {
@@ -41,8 +41,12 @@ export default class GuildMemberRemoveEvent extends Event {
           .setColor("RED");
 
         const ch = bot.channels.cache.get(leaveData.channel_id);
-        if (!ch) return;
-        (ch as TextChannel).send(embed);
+        if (!ch || !ch.isText()) return;
+        if (!(ch as TextChannel)?.permissionsFor(bot.user!)?.has(Permissions.FLAGS.SEND_MESSAGES)) {
+          return;
+        }
+
+        await ch.send({ embeds: [embed] });
 
         await bot.utils.removeUser(member.user.id, member.guild.id);
         await bot.utils.removeUserWarnings(member.user.id, member.guild.id);

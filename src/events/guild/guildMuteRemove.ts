@@ -1,6 +1,6 @@
 import { Guild } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 import { MuteData } from "./guildMuteAdd";
 
 export default class GuildMemberRemoveEvent extends Event {
@@ -24,7 +24,7 @@ export default class GuildMemberRemoveEvent extends Event {
         .addField("Executed by", executor.tag, true)
         .setColor("ORANGE");
 
-      return webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

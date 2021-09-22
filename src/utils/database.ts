@@ -1,21 +1,24 @@
 import { connect } from "mongoose";
-import Logger from "handlers/Logger";
+import { logger } from "utils/logger";
 
 async function database() {
   const uri = process.env["MONGO_DB_URI"];
 
   try {
     await connect(String(uri), {
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      connectTimeoutMS: 300000,
+      socketTimeoutMS: 75000,
+      keepAlive: true,
+      keepAliveInitialDelay: 300000,
     });
 
-    Logger.log("database", "Connected to mongodb");
+    logger.log("database", "Connected to mongodb");
   } catch (e) {
-    console.error(e);
-    Logger.error("database", e?.stack || e);
+    const error = e instanceof global.Error ? e : null;
+
+    console.error(error);
+
+    logger.error("database", error?.message!);
   }
 }
 

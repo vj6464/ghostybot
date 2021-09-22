@@ -1,7 +1,5 @@
-import { GiveawaysMessages } from "discord-giveaways";
-import Mongoose from "mongoose";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Mixed = require("mongoose").Mixed;
+import { GiveawaysMessages, LastChanceOptions, PauseOptions } from "discord-giveaways";
+import * as Mongoose from "mongoose";
 
 export interface IGiveaway extends Mongoose.Document {
   messageID: string;
@@ -14,12 +12,14 @@ export interface IGiveaway extends Mongoose.Document {
   prize: string;
   messages: GiveawaysMessages;
   hostedBy: string;
+  pauseOptions: PauseOptions;
+  lastChance: LastChanceOptions;
 }
 
 const GiveawaySchema = new Mongoose.Schema({
-  messageID: String,
-  channelID: String,
-  guildID: String,
+  messageId: String,
+  channelId: String,
+  guildId: String,
   startAt: Number,
   endAt: Number,
   ended: Boolean,
@@ -29,36 +29,44 @@ const GiveawaySchema = new Mongoose.Schema({
     giveaway: String,
     giveawayEnded: String,
     inviteToParticipate: String,
-    timeRemaining: String,
-    winMessage: String,
-    embedFooter: String,
+    drawing: String,
+    dropMessage: String,
+    winMessage: Mongoose.Schema.Types.Mixed,
+    embedFooter: Mongoose.Schema.Types.Mixed,
     noWinner: String,
     winners: String,
     endedAt: String,
     hostedBy: String,
-    units: {
-      seconds: String,
-      minutes: String,
-      hours: String,
-      days: String,
-      pluralS: Boolean,
-    },
   },
+  thumbnail: String,
   hostedBy: String,
-  winnerIDs: [String],
-  reaction: Mixed,
+  winnerIds: [String],
+  reaction: Mongoose.Schema.Types.Mixed,
   botsCanWin: Boolean,
-  embedColor: Mixed,
-  embedColorEnd: Mixed,
+  embedColor: Mongoose.Schema.Types.Mixed,
+  embedColorEnd: Mongoose.Schema.Types.Mixed,
   exemptPermissions: [],
   exemptMembers: String,
   bonusEntries: String,
-  extraData: Mixed,
+  extraData: Mongoose.Schema.Types.Mixed,
   lastChance: {
     enabled: Boolean,
     content: String,
     threshold: Number,
-    embedColor: Mixed,
+    embedColor: Mongoose.Schema.Types.Mixed,
+  },
+  pauseOptions: {
+    isPaused: Boolean,
+    content: String,
+    unPauseAfter: Number,
+    embedColor: Mongoose.Schema.Types.Mixed,
+    durationAfterPause: Number,
+  },
+  isDrop: Boolean,
+  allowedMentions: {
+    parse: [String],
+    users: [String],
+    roles: [String],
   },
 });
 

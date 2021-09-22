@@ -1,13 +1,13 @@
-import { Constants, GuildMember, TextChannel } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberAddEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_MEMBER_ADD);
+    super(bot, "guildMemberAdd");
   }
 
-  async execute(bot: Bot, member: GuildMember) {
+  async execute(bot: Bot, member: DJS.GuildMember) {
     try {
       if (!member.guild) return;
       if (!member.guild.available) return;
@@ -41,12 +41,21 @@ export default class GuildMemberAddEvent extends Event {
           );
 
         const ch = bot.channels.cache.get(welcomeData.channel_id);
-        if (!ch) return;
-        (ch as TextChannel).send(embed);
+        if (!ch || !ch.isText()) return;
+
+        const hasSendMessagePerms = (ch as DJS.TextChannel)
+          ?.permissionsFor(bot.user!)
+          ?.has(DJS.Permissions.FLAGS.SEND_MESSAGES);
+        if (!hasSendMessagePerms) return;
+
+        ch.send({ embeds: [embed] });
       }
 
-      if (!member.pending && welcomeData.role_id) {
-        if (!member.guild.me?.permissions.has("MANAGE_ROLES")) return;
+      if (
+        !member.pending &&
+        welcomeData.role_id &&
+        member.guild.me?.permissions.has(DJS.Permissions.FLAGS.MANAGE_ROLES)
+      ) {
         member.roles.add(welcomeData.role_id);
       }
     } catch (err) {

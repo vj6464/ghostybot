@@ -4,9 +4,11 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import AlertMessage from "@components/AlertMessage";
-import Guild from "types/Guild";
-import Loader from "@components/Loader";
+import { AlertMessage } from "@components/AlertMessage";
+import { Guild } from "types/Guild";
+import { Loader } from "@components/Loader";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   isAuth: boolean;
@@ -16,6 +18,7 @@ interface Props {
 const Dashboard: React.FC<Props> = ({ isAuth, guilds }: Props) => {
   const router = useRouter();
   const [message, setMessage] = React.useState<string | null>(null);
+  const { t } = useTranslation("guilds");
 
   React.useEffect(() => {
     const { query } = router;
@@ -35,21 +38,19 @@ const Dashboard: React.FC<Props> = ({ isAuth, guilds }: Props) => {
       <AlertMessage
         message={
           <>
-            This dashboard is still in beta! It could be that some thing will not work, if you found
-            an issue please report this at:{" "}
-            <a href="https://discord.gg/XxHrtkA">https://discord.gg/XxHrtkA</a>
+            {t("beta")} <a href="https://discord.gg/XxHrtkA">https://discord.gg/XxHrtkA</a>
           </>
         }
       />
       {message ? <AlertMessage message={message} /> : null}
       <div className="page-title">
-        <h4>Please select a server</h4>
+        <h4>{t("select_a_server")}</h4>
       </div>
 
       <div className="grid">
         {guilds.map((guild) => {
           // take the first letter of all the letters
-          const firstLetter = guild.name.split("")[0];
+          const [firstLetter] = guild.name.split("");
 
           // take the second word, then the first character of that word
           const secondLetter = guild.name.split(" ")[1]?.split("")[0];
@@ -60,7 +61,7 @@ const Dashboard: React.FC<Props> = ({ isAuth, guilds }: Props) => {
                 aria-disabled={!guild.inGuild}
                 href={!guild.inGuild ? "#" : `/dashboard/${guild.id}`}
                 className={`card guild-card ${!guild.inGuild ? "disabled" : ""}`}
-                aria-label={!guild.inGuild ? "The bot must be in this guild!" : undefined}
+                aria-label={!guild.inGuild ? t("bot_in_guild") : undefined}
               >
                 {guild.icon === null ? (
                   <div className="guild-card-img no-image">
@@ -71,7 +72,9 @@ const Dashboard: React.FC<Props> = ({ isAuth, guilds }: Props) => {
                   <Image
                     alt={guild.name}
                     className="guild-card-img"
-                    src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`}
+                    src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.${
+                      guild.icon.startsWith("a_") ? "gif" : "webp"
+                    }`}
                     width="65"
                     height="65"
                   />
@@ -98,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
+      ...(await serverSideTranslations(ctx.locale!, ["guild", "guilds", "footer", "profile"])),
       isAuth: data.error !== "invalid_token",
       guilds: data?.guilds ?? [],
     },

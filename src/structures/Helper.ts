@@ -1,16 +1,15 @@
-import Bot from "./Bot";
+import { Bot } from "./Bot";
 
-export default class Helper {
+export abstract class Helper {
   bot: Bot;
   name: string;
 
   constructor(bot: Bot, name: string) {
     this.bot = bot;
     this.name = name;
+
+    this.execute = this.execute.bind(this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async execute(): Promise<any> {
-    undefined;
-  }
+  abstract execute(): Promise<any>;
 }

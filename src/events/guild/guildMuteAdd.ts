@@ -1,6 +1,6 @@
 import { Guild, GuildMember, User } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export interface MuteData {
   member: GuildMember;
@@ -32,11 +32,11 @@ export default class GuildMemberMuteAddEvent extends Event {
         .addField("Reason", reason)
         .setColor("ORANGE");
 
-      if (tempMute) {
+      if (tempMute && time) {
         embed.addField("Muted for", time);
       }
 
-      return webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

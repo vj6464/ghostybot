@@ -5,12 +5,14 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { openModal } from "@components/modal";
-import AddStoreItem from "@components/modal/add-store-item";
+import { AddStoreItem } from "@components/modal/add-store-item";
 import { useRouter } from "next/router";
-import AlertMessage from "@components/AlertMessage";
-import Logger from "handlers/Logger";
-import Guild from "types/Guild";
-import Loader from "@components/Loader";
+import { AlertMessage } from "@components/AlertMessage";
+import { logger } from "utils/logger";
+import { Guild } from "types/Guild";
+import { Loader } from "@components/Loader";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   guild: Guild | null;
@@ -21,6 +23,8 @@ interface Props {
 const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
   const [message, setMessage] = React.useState<string | null>(null);
   const router = useRouter();
+  const { t } = useTranslation("guilds");
+  const { t: commonT } = useTranslation("common");
 
   React.useEffect(() => {
     if (!isAuth) {
@@ -35,7 +39,7 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
 
   async function deleteItem(name: string) {
     try {
-      const data = await (
+      const data = (await (
         await fetch(
           `${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${
             guild?.id
@@ -44,7 +48,7 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
             method: "DELETE",
           },
         )
-      ).json();
+      ).json()) as any;
 
       if (data.status === "success") {
         router.push(`/dashboard/${guild?.id}/store?message=${data.message}`);
@@ -52,7 +56,7 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
 
       setMessage(data?.error);
     } catch (e) {
-      Logger.error("delete_store_item", e);
+      logger.error("delete_store_item", e);
     }
   }
 
@@ -79,20 +83,22 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
       <AddStoreItem guild={guild} />
       <Head>
         <title>
-          {guild?.name} - Store / {process.env["NEXT_PUBLIC_DASHBOARD_BOTNAME"]} Dashboard
+          {guild?.name} - {t("store")}
         </title>
       </Head>
       <div className="page-title">
-        <h4>{guild?.name} - Store</h4>
+        <h4>
+          {guild?.name} - {t("store")}
+        </h4>
 
         <div>
           <Link href={`/dashboard/${guild.id}`}>
             <a href={`/dashboard/${guild.id}`} className="btn btn-primary">
-              Return
+              {commonT("return")}
             </a>
           </Link>
           <button className="btn btn-primary ml-5" onClick={addStoreItem}>
-            Add store item
+            {t("add_store_item")}
           </button>
         </div>
       </div>
@@ -101,9 +107,9 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Actions</th>
+              <th>{t("name")}</th>
+              <th>{t("price")}</th>
+              <th>{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -114,7 +120,7 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
                   <td>{item.price}</td>
                   <td className="table-actions">
                     <button onClick={() => deleteItem(item.name)} className="btn btn-sm btn-red">
-                      Delete
+                      {t("delete")}
                     </button>
                   </td>
                 </tr>
@@ -123,7 +129,7 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
           </tbody>
         </table>
       ) : (
-        <p>This guild does not have any items in the store yet</p>
+        <p>{t("no_store_items")}</p>
       )}
     </>
   );
@@ -131,16 +137,17 @@ const Store: React.FC<Props> = ({ guild, isAuth, error }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
 
-  const data = await (
+  const data = (await (
     await fetch(`${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${ctx.query.id}`, {
       headers: {
         auth: cookies?.token,
       },
     })
-  ).json();
+  ).json()) as any;
 
   return {
     props: {
+      ...(await serverSideTranslations(ctx.locale!, ["guilds", "footer", "profile", "common"])),
       isAuth: data.error !== "invalid_token",
       guild: data?.guild ?? null,
       error: data?.error ?? null,

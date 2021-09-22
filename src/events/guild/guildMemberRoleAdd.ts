@@ -1,6 +1,6 @@
 import { GuildMember, Role } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberRoleAddEvent extends Event {
   constructor(bot: Bot) {
@@ -22,7 +22,7 @@ export default class GuildMemberRoleAddEvent extends Event {
         .setTitle("Member Update: `Role Add`")
         .setDescription(`${member} was **given** the ${role} role.`);
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

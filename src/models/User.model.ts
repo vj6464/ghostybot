@@ -1,3 +1,4 @@
+import { Snowflake } from "discord.js";
 import { model, Schema, models, Document, ObjectId } from "mongoose";
 
 const userSchema = new Schema({
@@ -26,6 +27,13 @@ const userSchema = new Schema({
       reason: String,
     },
   },
+  temproles: {
+    type: Object,
+    default: {
+      hasTempRoles: false,
+      tempRoles: [],
+    },
+  },
   reminder: {
     type: Object,
     default: {
@@ -39,8 +47,8 @@ export type IUser = Document & UserData;
 
 export interface UserData {
   _id: ObjectId;
-  user_id: string;
-  guild_id: string;
+  user_id: Snowflake;
+  guild_id: Snowflake;
   inventory: string[];
   money: number;
   bank: number;
@@ -51,6 +59,10 @@ export interface UserData {
   afk: AfkObj;
   mute: Mute;
   reminder: Reminders;
+  temproles: {
+    hasTempRoles: boolean;
+    tempRoles: TempRole[];
+  };
 }
 
 export interface AfkObj {
@@ -72,11 +84,19 @@ export interface Reminders {
 
 export interface Reminder {
   _id: string;
-  id: number;
-  channel_id: string;
+  /**
+   * uuid but 8 characters long
+   */
+  id: string;
+  channel_id: Snowflake;
   msg: string;
   time: string;
   ends_at: number;
+}
+
+export interface TempRole {
+  ms: number;
+  roleId: Snowflake;
 }
 
 export default models.User || model<IUser>("User", userSchema);

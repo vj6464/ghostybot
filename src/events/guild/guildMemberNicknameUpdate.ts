@@ -1,6 +1,6 @@
 import { GuildMember } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberNicknameUpdateEvent extends Event {
   constructor(bot: Bot) {
@@ -26,7 +26,7 @@ export default class GuildMemberNicknameUpdateEvent extends Event {
         .setDescription(`${member}'s **nickname** was changed.`)
         .addField("Nickname", `${oldNickname} ➔ ${newNickname}`);
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

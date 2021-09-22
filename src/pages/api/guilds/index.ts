@@ -1,8 +1,10 @@
 import { NextApiResponse } from "next";
 import { Permissions } from "discord.js";
-import hiddenItems from "data/hidden-items.json";
-import ApiRequest from "types/ApiRequest";
-import Guild from "types/Guild";
+import hiddenGuildItems from "assets/json/hidden-items.json";
+import { ApiRequest } from "types/ApiRequest";
+import { Guild } from "types/Guild";
+
+const extraHidden = ["voiceStats", "stageInstances", "bans", "commands"];
 
 export default async function handler(req: ApiRequest, res: NextApiResponse) {
   const { method, headers } = req;
@@ -33,6 +35,7 @@ export default async function handler(req: ApiRequest, res: NextApiResponse) {
 
       const filteredGuilds = isAdminGuilds.map((guild: Guild) => {
         const g = req.bot.guilds.cache.get(guild.id);
+
         return {
           ...guild,
           ...g,
@@ -41,7 +44,7 @@ export default async function handler(req: ApiRequest, res: NextApiResponse) {
       });
 
       filteredGuilds.forEach((guild: Guild) => {
-        hiddenItems.forEach((item) => {
+        [...hiddenGuildItems, ...extraHidden].forEach((item) => {
           return (guild[item] = undefined);
         });
       });

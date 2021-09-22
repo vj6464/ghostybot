@@ -2,9 +2,9 @@ import StarboardsManager, { Starboard as StarboardData } from "discord-starboard
 import StarboardModel from "models/Starboard.model";
 
 export interface Starboard {
-  channelID: string;
-  guildID: string;
-  messageID: string;
+  channelId: string;
+  guildId: string;
+  messageId: string;
 
   emoji: string;
   starBotMsg: boolean;
@@ -17,7 +17,10 @@ export interface Starboard {
   allowNsfw: boolean;
 }
 
-class MongStarboardsManager extends StarboardsManager {
+/**
+ * @deprecated will be removed when message intents arrive
+ */
+export class MongoStarboardsManager extends StarboardsManager {
   async getAllStarboards() {
     return StarboardModel.find();
   }
@@ -29,11 +32,9 @@ class MongStarboardsManager extends StarboardsManager {
     return true;
   }
 
-  async deleteStarboard(channelID: string, emoji: string) {
-    await StarboardModel.findOneAndDelete({ channelID, "options.emoji": emoji });
+  async deleteStarboard(channelId: string, emoji: string) {
+    await StarboardModel.findOneAndDelete({ channelId, "options.emoji": emoji });
 
     return true;
   }
 }
-
-export default MongStarboardsManager;

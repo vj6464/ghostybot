@@ -1,17 +1,20 @@
-import { Constants, Message } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
+/**
+ * @deprecated this event will be deprecated once message intents arrive
+ */
 export default class MessageDeleteEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.MESSAGE_DELETE);
+    super(bot, "messageDelete");
   }
 
-  async execute(bot: Bot, message: Message) {
+  async execute(bot: Bot, message: DJS.Message) {
     try {
       if (!message.guild?.available) return;
       if (!message.guild) return;
-      if (!message.guild.me?.permissions.has("MANAGE_WEBHOOKS")) return;
+      if (!message.guild.me?.permissions.has(DJS.Permissions.FLAGS.MANAGE_WEBHOOKS)) return;
 
       const webhook = await bot.utils.getWebhook(message.guild);
       if (!webhook) return;
@@ -33,7 +36,7 @@ export default class MessageDeleteEvent extends Event {
         );
       } else if (!message.content) return;
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

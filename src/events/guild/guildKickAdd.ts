@@ -1,6 +1,6 @@
 import { Guild, GuildMember, User } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export interface GuildKickData {
   member: GuildMember;
@@ -28,10 +28,10 @@ export default class GuildKickAddEvent extends Event {
         .setTitle(lang.EVENTS.KICK_ADD)
         .addField(lang.MEMBER.TAG, member.user.tag, true)
         .addField(lang.EVENTS.EXECUTED_BY, executor.tag, true)
-        .addField(lang.EVENTS.REASON, reason)
+        .addField(lang.EVENTS.REASON, reason ?? lang.GLOBAL.NOT_SPECIFIED)
         .setColor("ORANGE");
 
-      return webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

@@ -1,10 +1,10 @@
-import { Constants, Role } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import { Role } from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class RoleUpdateEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_ROLE_UPDATE);
+    super(bot, "roleUpdate");
   }
 
   async execute(bot: Bot, oldRole: Role, newRole: Role) {
@@ -30,7 +30,7 @@ export default class RoleUpdateEvent extends Event {
         .setColor("ORANGE")
         .setTimestamp();
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }
