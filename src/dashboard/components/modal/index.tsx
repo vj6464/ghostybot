@@ -2,11 +2,12 @@ import * as React from "react";
 import { XIcon } from "../icons";
 
 interface Props {
+  children: React.ReactNode;
   title: string;
   id: string;
 }
 
-const Modal: React.FC<Props> = ({ title, id, children }) => {
+export function Modal({ title, id, children }: Props) {
   React.useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
@@ -30,7 +31,7 @@ const Modal: React.FC<Props> = ({ title, id, children }) => {
       </div>
     </div>
   );
-};
+}
 
 export function openModal(id: string) {
   document.querySelector(`#${id}`)?.classList.add("active");
@@ -46,5 +47,3 @@ export function closeModal(id: string) {
     document.querySelector(`#${id}`)?.classList.remove("active");
   });
 }
-
-export default Modal;

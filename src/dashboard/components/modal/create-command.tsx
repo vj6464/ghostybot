@@ -1,56 +1,66 @@
 import * as React from "react";
-import Modal, { closeModal } from "./index";
-import Logger from "handlers/Logger";
-import AlertMessage from "../AlertMessage";
-import { useRouter } from "next/router";
-import Guild from "types/Guild";
+import { Modal, closeModal } from "./index";
+import { logger } from "utils/logger";
+import { AlertMessage } from "../AlertMessage";
+import { useTranslation } from "react-i18next";
+import { useSlashStore } from "src/dashboard/state/slashState";
 
 interface Props {
-  guild: Guild;
+  guildId: string;
 }
 
-const CreateCommandModal: React.FC<Props> = ({ guild }: Props) => {
+export function CreateCommandModal({ guildId }: Props) {
   const [name, setName] = React.useState("");
   const [cmdRes, setCmdRes] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [response, setResponse] = React.useState<{ error: string } | null>(null);
-  const router = useRouter();
+
+  const { t } = useTranslation("guilds");
+  const state = useSlashStore();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        `${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${guild.id}/commands`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            name,
-            response: cmdRes,
-          }),
-        },
-      );
+      const url = `${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${guildId}/slash-commands`;
+
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          description,
+          response: cmdRes,
+        }),
+      });
+
       const data = await res.json();
 
       if (data.status === "success") {
         closeModal("createCommandModal");
+
         setName("");
         setCmdRes("");
+        setDescription("");
         setResponse(null);
-        router.push(`/dashboard/${guild.id}/commands?message=Successfully Added command`);
+
+        state.setItems([...state.items, data.command]);
+        state.setMessage(t("added_command"));
       }
 
       setResponse(data);
     } catch (e) {
-      Logger.error("create_Command", e);
+      logger.error("create_Command", e);
     }
   }
 
   return (
-    <Modal id="createCommandModal" title="Create command">
-      {response?.error ? <AlertMessage message={response?.error} /> : null}
+    <Modal id="createCommandModal" title={t("create_command")}>
+      {response?.error ? <AlertMessage message={response.error} /> : null}
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Command name</label>
+          <label className="form-label" htmlFor="name">
+            {t("command_name")}
+          </label>
           <input
             id="name"
             value={name}
@@ -59,23 +69,34 @@ const CreateCommandModal: React.FC<Props> = ({ guild }: Props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="response">Command response</label>
+          <label className="form-label" htmlFor="name">
+            {t("command_desc")}
+          </label>
+          <input
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="response">
+            {t("command_response")}
+          </label>
           <textarea
             id="response"
             value={cmdRes}
             onChange={(e) => setCmdRes(e.target.value)}
             className="form-input"
             maxLength={1800}
-          ></textarea>
+          />
         </div>
         <div className="float-right">
           <button className="btn btn-primary" type="submit">
-            Add command
+            {t("create_command")}
           </button>
         </div>
       </form>
     </Modal>
   );
-};
-
-export default CreateCommandModal;
+}

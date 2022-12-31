@@ -1,13 +1,13 @@
-import { Constants, GuildMember, TextChannel } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberAddEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_MEMBER_ADD);
+    super(bot, "guildMemberAdd");
   }
 
-  async execute(bot: Bot, member: GuildMember) {
+  async execute(bot: Bot, member: DJS.GuildMember) {
     try {
       if (!member.guild) return;
       if (!member.guild.available) return;
@@ -16,18 +16,18 @@ export default class GuildMemberAddEvent extends Event {
       if (!welcomeData?.enabled) return;
 
       const message =
-        welcomeData?.message ||
+        welcomeData.message ||
         `**Username:** {user.username}
       **Tag:** {user.tag}
       **Id:** {user.id}
       `;
 
-      if (welcomeData.ignore_bots === true && member.user.bot === true) return;
+      if (welcomeData.ignore_bots && member.user.bot) return;
 
       if (welcomeData.channel_id) {
         if (!member.guild.channels.cache.find((ch) => ch.id === welcomeData.channel_id)) return;
 
-        const avatar = member.user.displayAvatarURL({ dynamic: true });
+        const avatar = member.user.displayAvatarURL();
 
         const embed = bot.utils
           .baseEmbed({ author: member.user })
@@ -41,12 +41,22 @@ export default class GuildMemberAddEvent extends Event {
           );
 
         const ch = bot.channels.cache.get(welcomeData.channel_id);
-        if (!ch) return;
-        (ch as TextChannel).send(embed);
+        if (!ch || !ch.isTextBased()) return;
+
+        const hasSendMessagePerms = (ch as DJS.TextChannel)
+          .permissionsFor(bot.user!)
+          ?.has(DJS.PermissionFlagsBits.SendMessages);
+        if (!hasSendMessagePerms) return;
+
+        ch.send({ embeds: [embed] });
       }
 
-      if (!member.pending && welcomeData.role_id) {
-        if (!member.guild.me?.permissions.has("MANAGE_ROLES")) return;
+      const me = bot.utils.getMe(member);
+      if (
+        !member.pending &&
+        welcomeData.role_id &&
+        me?.permissions.has(DJS.PermissionFlagsBits.ManageRoles)
+      ) {
         member.roles.add(welcomeData.role_id);
       }
     } catch (err) {

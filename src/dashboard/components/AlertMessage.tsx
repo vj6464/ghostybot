@@ -2,10 +2,10 @@ import { Check, Warning } from "./icons";
 
 interface Props {
   type?: "warning" | "error" | "success";
-  message: string | React.ReactFragment;
+  message: React.ReactNode;
 }
 
-const AlertMessage: React.FC<Props> = ({ type = "warning", message }: Props) => {
+export function AlertMessage({ type = "warning", message }: Props) {
   return (
     <div className={`alert-message alert-${type}`}>
       {type === "warning" ? <Warning /> : null}
@@ -14,6 +14,4 @@ const AlertMessage: React.FC<Props> = ({ type = "warning", message }: Props) => 
       <p>{message}</p>
     </div>
   );
-};
-
-export default AlertMessage;
+}

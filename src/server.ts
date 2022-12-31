@@ -1,6 +1,8 @@
-import Bot from "./structures/Bot";
-import { createServer } from "http";
-import { parse } from "url";
+import { TransformStream } from "node:stream/web";
+import type { Bot } from "structures/Bot";
+import type { ApiRequest } from "types/ApiRequest";
+import { createServer } from "node:http";
+import { parse } from "node:url";
 import next from "next";
 
 export default (bot: Bot) => {
@@ -8,16 +10,21 @@ export default (bot: Bot) => {
   const app = next({ dev });
   const handle = app.getRequestHandler();
 
-  app.prepare().then(() => {
-    createServer((req, res) => {
-      const parsedUrl = parse(req.url!, true);
+  // @ts-expect-error this is a "polyfill" to fix "TransformStream is not defined".
+  global.TransformStream = TransformStream;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (req as any).bot = bot;
+  app
+    .prepare()
+    .then(() => {
+      return createServer((req, res) => {
+        const parsedUrl = parse(req.url!, true);
 
-      handle(req, res, parsedUrl);
-    }).listen(process.env["DASHBOARD_PORT"], () => {
-      bot.logger.log("dashboard", "Dashboard was started");
-    });
-  });
+        (req as ApiRequest).bot = bot;
+
+        handle(req, res, parsedUrl);
+      }).listen(process.env["DASHBOARD_PORT"], () => {
+        bot.logger.log("dashboard", "Dashboard was started");
+      });
+    })
+    .catch(console.error);
 };

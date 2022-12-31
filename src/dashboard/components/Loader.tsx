@@ -2,12 +2,10 @@ interface Props {
   full: boolean;
 }
 
-const Loader: React.FC<Props> = ({ full }: Props) => {
+export function Loader({ full }: Props) {
   return (
     <div className={full ? "full" : ""}>
-      <div className="loader"></div>
+      <div className="loader" />
     </div>
   );
-};
-
-export default Loader;
+}

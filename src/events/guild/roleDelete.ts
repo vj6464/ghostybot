@@ -1,13 +1,13 @@
-import { Constants, Role } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class RoleDeleteEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_ROLE_DELETE);
+    super(bot, "roleDelete");
   }
 
-  async execute(bot: Bot, role: Role) {
+  async execute(bot: Bot, role: DJS.Role) {
     try {
       if (!role.guild) return;
       if (!role.guild.available) return;
@@ -18,10 +18,10 @@ export default class RoleDeleteEvent extends Event {
         .baseEmbed({ author: bot.user })
         .setTitle("Role deleted")
         .setDescription(`Role: **${role.name}** was deleted`)
-        .setColor("RED")
+        .setColor(DJS.Colors.Red)
         .setTimestamp();
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

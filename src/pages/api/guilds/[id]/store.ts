@@ -1,6 +1,5 @@
 import { NextApiResponse } from "next";
-import ApiRequest from "types/ApiRequest";
-import { CustomCommand, StoreItem } from "models/Guild.model";
+import { ApiRequest } from "types/ApiRequest";
 
 export default async function handler(req: ApiRequest, res: NextApiResponse) {
   const { method, query } = req;
@@ -32,39 +31,41 @@ export default async function handler(req: ApiRequest, res: NextApiResponse) {
       }
 
       const isNumber = /^\d+$/;
-      const price = Number(body.price);
+      const price = body.price as string;
       const name = body.name.toLowerCase();
 
-      if (!isNumber.test(`${price}`)) {
+      if (!isNumber.test(price.toString())) {
         return res.status(400).json({
           error: lang.ECONOMY.MUST_BE_NUMBER,
           status: "error",
         });
       }
 
-      if (guild.custom_commands?.find((x: CustomCommand) => x.name === name)) {
+      if (guild.store.find((x) => x.name === name)) {
         return res.status(400).json({
-          error: lang.ECONOMY.ALREADY_EXISTS.replace("{item}", name),
+          error: req.bot.utils.translate(lang.ECONOMY.ALREADY_EXISTS, { item: name }),
           status: "error",
         });
       }
 
       await req.bot.utils.updateGuildById(`${query.id}`, {
-        store: [...guild.store, { name: name, price: price }],
+        store: [...guild.store, { name, price }],
       });
 
       return res.json({ status: "success" });
     }
     case "DELETE": {
-      const filtered = guild.store?.filter(
-        (item: StoreItem) => item.name.toLowerCase() !== (query.name as string).toLowerCase(),
+      const filtered = guild.store.filter(
+        (item) => item.name.toLowerCase() !== (query.name as string).toLowerCase(),
       );
 
       await req.bot.utils.updateGuildById(`${query.id}`, { store: filtered });
 
       return res.json({
         status: "success",
-        message: lang.ECONOMY.REMOVED_FROM_STORE.replace("{item}", `${query.name}`),
+        message: req.bot.utils.translate(lang.ECONOMY.REMOVED_FROM_STORE, {
+          item: query.name as string,
+        }),
       });
     }
     default: {

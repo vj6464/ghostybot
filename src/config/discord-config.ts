@@ -1,27 +1,31 @@
-import { ClientOptions, Constants, Intents } from "discord.js";
+import * as DJS from "discord.js";
 
-export const discordConfig: ClientOptions = {
+export const discordConfig: DJS.ClientOptions = {
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_BANS,
-    Intents.FLAGS.GUILD_EMOJIS,
-    Intents.FLAGS.GUILD_INTEGRATIONS,
-    Intents.FLAGS.GUILD_INVITES,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-    Intents.FLAGS.GUILD_MESSAGE_TYPING,
-    Intents.FLAGS.GUILD_VOICE_STATES,
-    Intents.FLAGS.GUILD_WEBHOOKS,
+    DJS.GatewayIntentBits.Guilds,
+    DJS.GatewayIntentBits.GuildMessages,
+    DJS.GatewayIntentBits.GuildBans,
+    DJS.GatewayIntentBits.GuildEmojisAndStickers,
+    DJS.GatewayIntentBits.GuildMembers,
+    DJS.GatewayIntentBits.GuildMessageReactions,
+    DJS.GatewayIntentBits.GuildVoiceStates,
+    DJS.GatewayIntentBits.GuildIntegrations,
   ],
   partials: [
-    Constants.PartialTypes.GUILD_MEMBER,
-    Constants.PartialTypes.MESSAGE,
-    Constants.PartialTypes.USER,
-    Constants.PartialTypes.REACTION,
-    Constants.PartialTypes.CHANNEL,
+    DJS.Partials.GuildMember,
+    DJS.Partials.User,
+    DJS.Partials.Reaction,
+    DJS.Partials.Channel,
   ],
-  disableMentions: "everyone",
-  restRequestTimeout: 25000,
+  rest: {
+    timeout: 25_000,
+  },
   allowedMentions: { parse: ["roles", "users"] },
+
+  makeCache: DJS.Options.cacheWithLimits({
+    ...DJS.Options.DefaultMakeCacheSettings,
+    MessageManager: { maxSize: 2 },
+    ThreadManager: { maxSize: 2 },
+    ThreadMemberManager: { maxSize: 2 },
+  }),
 };

@@ -1,27 +1,31 @@
-import { GuildChannel, Constants } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class ChannelUpdateEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.CHANNEL_UPDATE);
+    super(bot, "channelUpdate");
   }
 
-  async execute(bot: Bot, oldChannel: GuildChannel, newChannel: GuildChannel) {
+  async execute(bot: Bot, oldChannel: DJS.GuildChannel, newChannel: DJS.GuildChannel) {
     try {
-      if (!oldChannel.guild?.available) return;
-      if (!oldChannel.guild.me?.permissions.has("MANAGE_WEBHOOKS")) return;
+      if (!oldChannel.guild.available) return;
+
+      const me = bot.utils.getMe(oldChannel);
+      if (!me?.permissions.has(DJS.PermissionFlagsBits.ManageWebhooks)) return;
 
       const webhook = await bot.utils.getWebhook(newChannel.guild);
       if (!webhook) return;
       const lang = await bot.utils.getGuildLang(newChannel.guild.id);
 
       let msg = "";
-      const type = newChannel.type === "category" ? "Category" : "Channel";
+      const type = newChannel.type === DJS.ChannelType.GuildCategory ? "Category" : "Channel";
       if (oldChannel.name !== newChannel.name) {
-        msg = lang.EVENTS.CHANNEL_RENAME_MSG.replace("{channel_type}", type)
-          .replace("{channel}", oldChannel.name)
-          .replace("{new_channel}", newChannel.name);
+        msg = this.bot.utils.translate(lang.EVENTS.CHANNEL_RENAME_MSG, {
+          channel_type: type,
+          channel: oldChannel.name,
+          new_channel: newChannel.name,
+        });
       } else {
         return;
       }
@@ -30,10 +34,10 @@ export default class ChannelUpdateEvent extends Event {
         .baseEmbed({ author: bot.user })
         .setTitle(lang.EVENTS.CHANNEL_RENAME)
         .setDescription(msg)
-        .setColor("ORANGE")
+        .setColor(DJS.Colors.Orange)
         .setTimestamp();
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

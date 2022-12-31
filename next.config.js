@@ -1,7 +1,7 @@
 /* eslint-disable */
-const withPWA = require("next-pwa");
+const { i18n } = require("./next-i18next.config");
 
-module.exports = withPWA({
+module.exports = {
   images: {
     domains: ["cdn.discordapp.com"] /* KEEP THIS OTHERWISE IMAGES WILL NOT LOAD */,
   },
@@ -10,7 +10,7 @@ module.exports = withPWA({
       {
         source: "/add",
         destination:
-          "https://discord.com/oauth2/authorize?client_id=632843197600759809&scope=bot&permissions=8",
+          "https://discord.com/oauth2/authorize?client_id=632843197600759809&scope=bot+applications.commands&permissions=8",
         permanent: true,
       },
       {
@@ -30,26 +30,5 @@ module.exports = withPWA({
       },
     ];
   },
-  future: {
-    webpack5: true,
-  },
-  webpack: (config, { dev, isServer }) => {
-    // fixes 'cannot resolve 'erlpack' in discord.js/src'
-    config.externals.push("erlpack");
-
-    if (!dev && !isServer) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        react: "preact/compat",
-        "react-dom/test-utils": "preact/test-utils",
-        "react-dom": "preact/compat",
-      };
-    }
-
-    return config;
-  },
-  pwa: {
-    disable: process.env.NODE_ENV !== "production",
-    dest: "public",
-  },
-});
+  i18n,
+};

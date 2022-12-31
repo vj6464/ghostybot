@@ -1,13 +1,13 @@
-import { Constants, Role } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class RoleUpdateEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_ROLE_UPDATE);
+    super(bot, "roleUpdate");
   }
 
-  async execute(bot: Bot, oldRole: Role, newRole: Role) {
+  async execute(bot: Bot, oldRole: DJS.Role, newRole: DJS.Role) {
     try {
       if (!newRole.guild) return;
       if (!newRole.guild.available) return;
@@ -27,10 +27,10 @@ export default class RoleUpdateEvent extends Event {
         .baseEmbed({ author: bot.user })
         .setTitle("Role Updated")
         .setDescription(msg)
-        .setColor("ORANGE")
+        .setColor(DJS.Colors.Orange)
         .setTimestamp();
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

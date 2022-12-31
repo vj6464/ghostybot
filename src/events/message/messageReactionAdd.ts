@@ -1,35 +1,44 @@
-import ReactionsModel, { Reaction } from "models/Reactions.model";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
+import { prisma } from "utils/prisma";
 
-import { Constants, Message, MessageReaction, TextChannel, User } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+const neededPerms = [
+  DJS.PermissionFlagsBits.ManageMessages,
+  DJS.PermissionFlagsBits.ManageRoles,
+  DJS.PermissionFlagsBits.ReadMessageHistory,
+];
 
 export default class MessageReactionAddEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.MESSAGE_REACTION_ADD);
+    super(bot, "messageReactionAdd");
   }
 
-  async execute(bot: Bot, react: MessageReaction, user: User) {
+  async execute(bot: Bot, react: DJS.MessageReaction, user: DJS.User) {
     try {
+      // ignore bots
       if (user.bot) return;
+      if (!react.emoji) return;
+
       const { guild } = react.message;
       if (!guild?.available) return;
+      const me = this.bot.utils.getMe(react.message.guild);
+      if (!me?.permissions.has(neededPerms)) {
+        return;
+      }
 
-      if (!guild.me?.permissions.has(["MANAGE_MESSAGES", "MANAGE_ROLES"])) return;
       if (!guild) return;
 
       const member = guild.members.cache.get(user.id);
       if (!member) return;
 
-      const dbReaction = await ReactionsModel.findOne({
-        guild_id: guild.id,
-        message_id: react.message.id,
+      const dbReaction = await prisma.reactions.findFirst({
+        where: { guild_id: guild.id, message_id: react.message.id },
       });
+
       if (!dbReaction) return;
 
-      const reaction = dbReaction.reactions.find(
-        (r: Reaction) => r.emoji === react.emoji.toString(),
-      );
+      const reaction = dbReaction.reactions.find((r) => r.emoji === react.emoji.toString());
       if (!reaction) return;
 
       if (!member.roles.cache.has(reaction.role_id)) {
@@ -38,18 +47,15 @@ export default class MessageReactionAddEvent extends Event {
         member.roles.remove(reaction.role_id);
       }
 
-      const channel = guild.channels.cache.get(dbReaction.channel_id) as TextChannel;
+      const channel = guild.channels.cache.get(dbReaction.channel_id) as DJS.TextChannel;
       if (!channel) return;
+      if (!channel.permissionsFor(me).has([neededPerms])) return;
 
-      let msg: Message | undefined;
-      try {
-        msg = await channel.messages.fetch(dbReaction.message_id);
-      } catch {
+      if (!channel.permissionsFor(bot.user!.id)?.has(DJS.PermissionFlagsBits.ViewChannel)) {
         return;
       }
-      if (!msg) return;
 
-      msg.reactions.resolve(react.emoji.toString())?.users.remove(user.id);
+      await react.users.remove(user.id);
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

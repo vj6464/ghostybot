@@ -1,12 +1,12 @@
-import { StarboardEvents } from "discord-starboards";
 import glob from "glob";
-import { parse } from "path";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import {} from "distube";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
+import { resolveFile, validateFile } from "utils/HandlersUtil";
 
 const types = ["channel", "client", "guild", "message", "player", "sb"];
 
-export default class EventHandler {
+export class EventHandler {
   bot: Bot;
 
   constructor(bot: Bot) {
@@ -19,20 +19,15 @@ export default class EventHandler {
     const files = process.env.BUILD_PATH
       ? glob.sync("./dist/src/events/**/*.js")
       : glob.sync("./src/events/**/*.ts");
-    const path = process.env.BUILD_PATH ? "../../../" : "../../";
 
     for (const file of files) {
       delete require.cache[file];
-      const { name } = parse(`${path}${file}`);
 
-      if (!name) {
-        throw Error(`[ERROR][EVENT]: event must have a name (${file})`);
-      }
+      const event = await resolveFile<Event>(file, this.bot);
+      if (!event) continue;
+      await validateFile(file, event);
 
-      const File = await (await import(`${path}/${file}`)).default;
-      const event = new File(this.bot, name) as Event;
       const isPlayer = file.includes("player.");
-      const isStarboard = file.includes("sb.");
 
       types.forEach((t) => {
         if (file.includes(`${t}.`)) {
@@ -45,12 +40,9 @@ export default class EventHandler {
       }
 
       if (isPlayer) {
-        this.bot.player.on(event.name, event.execute.bind(null, this.bot));
-      } else if (isStarboard) {
-        this.bot.starboardsManager.on(
-          event.name as keyof StarboardEvents,
-          event.execute.bind(null, this.bot),
-        );
+        this.bot.player.on(event.name as any, event.execute.bind(null, this.bot));
+      } else if (event.once) {
+        this.bot.once(event.name, event.execute.bind(null, this.bot));
       } else {
         this.bot.on(event.name, event.execute.bind(null, this.bot));
       }

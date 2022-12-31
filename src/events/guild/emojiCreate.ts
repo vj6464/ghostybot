@@ -1,16 +1,18 @@
-import { Constants, GuildEmoji } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class EmojiCreateEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_EMOJI_CREATE);
+    super(bot, "emojiCreate");
   }
 
-  async execute(bot: Bot, emoji: GuildEmoji) {
+  async execute(bot: Bot, emoji: DJS.GuildEmoji) {
     try {
       if (!emoji.guild) return;
-      if (!emoji.guild.me?.permissions.has("MANAGE_WEBHOOKS")) {
+
+      const me = bot.utils.getMe(emoji);
+      if (!me?.permissions.has(DJS.PermissionFlagsBits.ManageWebhooks)) {
         return;
       }
       const webhook = await bot.utils.getWebhook(emoji.guild);
@@ -20,11 +22,15 @@ export default class EmojiCreateEvent extends Event {
       const embed = bot.utils
         .baseEmbed({ author: bot.user })
         .setTitle(lang.EVENTS.EMOJI_CREATED)
-        .setDescription(lang.EVENTS.EMOJI_CREATED_MSG.replace("{emoji}", `${emoji}`))
-        .setColor("GREEN")
+        .setDescription(
+          this.bot.utils.translate(lang.EVENTS.EMOJI_CREATED_MSG, {
+            emoji: emoji.toString(),
+          }),
+        )
+        .setColor(DJS.Colors.Green)
         .setTimestamp();
 
-      webhook.send(embed);
+      await webhook.send({ embeds: [embed] });
     } catch (err) {
       bot.utils.sendErrorLog(err, "error");
     }

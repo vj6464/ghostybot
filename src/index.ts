@@ -3,23 +3,22 @@ import "dotenv/config";
 
 P.Promise.config({
   longStackTraces: true,
-  warnings: true,
 });
 
-import "@utils/checkValid";
-import "@utils/database";
-import logs from "discord-logs";
-import Bot from "structures/Bot";
+import "utils/checkValid";
+// import logs from "discord-logs";
+import { Bot } from "structures/Bot";
 
 const bot = new Bot();
-logs(bot);
+// logs(bot);
 
 if (process.env["DASHBOARD_ENABLED"] === "true") {
+  // eslint-disable-next-line promise/catch-or-return
   import("./server").then((v) => v.default(bot));
 }
 
 if (process.env["DEBUG_MODE"] === "true") {
-  bot.on("debug", console.log);
+  bot.on("debug", console.info);
 }
 
 bot.login(process.env["DISCORD_BOT_TOKEN"]);

@@ -1,4222 +1,1658 @@
-# Ghostybot Command list
+# GhostyBot Command list
+
+> **This list only shows slash commands! Regular are considered deprecated for GhostyBot.**
 
 This command list was automatically generated in [this file](https://github.com/Dev-CasperTheGhost/ghostybot/tree/main/src/scripts/generateCommandList.ts).
-Ghostybot has a total of 205 commands.
-
-Click any of the command names for more information
-
-## Category list
-
-[admin](#category-admin)
-
-[animal](#category-animal)
-
-[economy](#category-economy)
-
-[games](#category-games)
-
-[image](#category-image)
-
-[levels](#category-levels)
-
-[music](#category-music)
-
-[util](#category-util)
-
-[exempt](#category-exempt)
-
-[botowner](#category-botowner)
-
-[giveaway](#category-giveaway)
-
-[reactions](#category-reactions)
-
-[reminder](#category-reminder)
-
-[ticket](#category-ticket)
-
-## Command list
-
-### Category: admin
-
-**Total commands: 35**
-
-[addcmd:](#addcmd) add guild custom commands
-
-[addrole:](#addrole) Add a role to a user
-
-[addroleall:](#addroleall) Add a role to all user of the current server
-
-[announce:](#announce) Announce something in a channel
-
-[ban:](#ban) ban
-
-[blacklistedwords:](#blacklistedwords) Add/remove blacklisted words
-
-[createrole:](#createrole) This command creates a role with the name of what you say
-
-[ctopic:](#ctopic) Update the channel topic
-
-[deafen:](#deafen) Deafen a user
-
-[delcmd:](#delcmd) Delete the custom commannd
-
-[delete:](#delete) Delete message, up to 100
-
-[ignoredchannels:](#ignoredchannels) Add/remove ignored channels
-
-[kick:](#kick) Kick a user
-
-[lockchannel:](#lockchannel) Lock A channel
-
-[mute:](#mute) Mute a user
-
-[nuke:](#nuke) Nuke the current channel, delete all messages of the channel
-
-[removerole:](#removerole) Remove a role from a user
-
-[removeroleall:](#removeroleall) remove a role from all users of the current server
-
-[removeuserwarns:](#removeuserwarns) Remove all warns from a user
-
-[say:](#say) Let the bot say something
-
-[set:](#set) N/A
-
-[stealemoji:](#stealemoji) Steal an emoji from a different server
-
-[sticky:](#sticky) Sticky a message to the bottom of the screen
-
-[tempmute:](#tempmute) Temporary mute someone
-
-[unban:](#unban) unban a user by their id
-
-[undeafen:](#undeafen) Undeafen a user from voice channel
-
-[unlockchannel:](#unlockchannel) Unlock A channel
-
-[unmute:](#unmute) Unmute a user
-
-[unset:](#unset) N/A
-
-[unsticky:](#unsticky) Sticky a message to the bottom of the screen
-
-[voicekick:](#voicekick) voicekick or disconnect a user from a voice channel
-
-[voicemute:](#voicemute) voicemute a user
-
-[voiceunmute:](#voiceunmute) unmute a user from voice channel
-
-[warn:](#warn) Warns a user
-
-[warnings:](#warnings) Returns how many warnings a user has
-
----
-
-### Category: animal
-
-**Total commands: 19**
-
-[bird:](#bird) Returns an image of a bird
-
-[bunny:](#bunny) Shows a picture of a bunny
-
-[cat:](#cat) Shows a picture of a cat
-
-[catfact:](#catfact) Returns a cat fact
-
-[cow:](#cow) Returns a cow ascii
-
-[cowsay:](#cowsay) Let a cow say something
-
-[dog:](#dog) Shows a picture of a dog
-
-[dogfact:](#dogfact) Returns a dog fact
-
-[duck:](#duck) Shows a picture of a duck
-
-[fox:](#fox) Shows a picture of a fox
-
-[kangaroo:](#kangaroo) An image of a kangaroo
-
-[koala:](#koala) Shows a random picture of koala
-
-[lizard:](#lizard) Shows a picture of a lizard
-
-[owl:](#owl) Shows a picture of a owl
-
-[panda:](#panda) Shows a picture of a panda
-
-[racoon:](#racoon) Shows an image of a raccoon
-
-[red-panda:](#red-panda) An image of a red panda
-
-[shibe:](#shibe) Returns an image of a shibe
-
-[whale:](#whale) Shows an image of a whale
-
----
-
-### Category: economy
-
-**Total commands: 18**
-
-[addmoney:](#addmoney) Add money to a user
-
-[balance:](#balance) balance
-
-[buy:](#buy) Buy an item from the store
-
-[daily:](#daily) daily
-
-[deposit:](#deposit) deposit money to your bank
-
-[dice:](#dice) Roll a dice
-
-[inventory:](#inventory) View your or a user inventory
-
-[moneyleaderboard:](#moneyleaderboard) Returns a leaderboard with the top 10 users money
-
-[pay:](#pay) Give money to a user
-
-[profile:](#profile) See the full profile of a user
-
-[removemoney:](#removemoney) Remove money to a user
-
-[reseteconomy:](#reseteconomy) Reset all money/bank in this guild
-
-[rob:](#rob) Rob up to 1000coins from somebody
-
-[slots:](#slots) Slots machine
-
-[store:](#store) View the store/shop to buy something
-
-[weekly:](#weekly) Collect your weekly price
-
-[withdraw:](#withdraw) Withdraw money to your bank
-
-[work:](#work) work
-
----
-
-### Category: games
-
-**Total commands: 18**
-
-[8ball:](#8ball) 8Ball
-
-[advice:](#advice) Gives you advice
-
-[ascii:](#ascii) Transform text to ascii
-
-[bet:](#bet) Bet on somebody
-
-[block:](#block) Write text with blocks
-
-[calc:](#calc) Calculate something
-
-[compliment:](#compliment) Get a compliment
-
-[dadjoke:](#dadjoke) Shows a dadjoke
-
-[flipcoin:](#flipcoin) Flip a coin
-
-[happiness:](#happiness) Get a happiness returned
-
-[iq:](#iq) Get a random Iq returned
-
-[lmgtfy:](#lmgtfy) Let me google that for you
-
-[meme:](#meme) Returns a meme
-
-[randomjoke:](#randomjoke) returns a random joke
-
-[randomnumber:](#randomnumber) Returns a random 6 digit number
-
-[rps:](#rps) Rock Paper Scissors
-
-[tictactoe:](#tictactoe) Play a game of tictactoe
-
-[wyr:](#wyr) Would you rather
-
----
-
-### Category: image
-
-**Total commands: 26**
-
-[ad:](#ad) Shows an amazing advertisement
-
-[amazeme:](#amazeme) Shows interesting images or facts
-
-[amazingearth:](#amazingearth) Amazing images of light and landscape
-
-[baka:](#baka) None
-
-[changemymind:](#changemymind) Change my mind
-
-[clyde:](#clyde) Let clyde say something
-
-[cuddle:](#cuddle) Cuddle with somebody
-
-[feed:](#feed) feed somebody
-
-[foodporn:](#foodporn) Shows Food images
-
-[giphy:](#giphy) Return a giphy image
-
-[hug:](#hug) Shows a picture of people hugging
-
-[imgfy:](#imgfy) text to image converter xD
-
-[invert:](#invert) Invert your avatar
-
-[kiss:](#kiss) Shows a picture of people kissing
-
-[magik:](#magik) Just Magik
-
-[owo:](#owo) OwO
-
-[pat:](#pat) Pat somebody
-
-[pikachu:](#pikachu) An image of a pikachu
-
-[poke:](#poke) Poke somebody
-
-[slap:](#slap) Slap somebody
-
-[smug:](#smug) Smug
-
-[supreme:](#supreme) Display custom text as the Supreme logo
-
-[threshold:](#threshold) threshold your avatar
-
-[trash:](#trash) Put someone in the trash bin someone
-
-[tweet:](#tweet) Returns an image with your tweet
-
-[ytcomment:](#ytcomment) Returns an image with your YouTube comment
-
----
-
-### Category: levels
-
-**Total commands: 5**
-
-[givexp:](#givexp) Give someone Xp
-
-[leaderboard:](#leaderboard) Shows top 10 users with the highest amount of XP
-
-[level:](#level) Get your current level
-
-[resetxp:](#resetxp) reset all users xp for current server
-
-[xp:](#xp) Get xp from a user or yourself
-
----
-
-### Category: music
-
-**Total commands: 17**
-
-[back:](#back) Play back the previous song
-
-[clearqueue:](#clearqueue) Clear the music playlist
-
-[filter:](#filter) Set or remove a filter
-
-[filters:](#filters) All music filters
-
-[loop:](#loop) Loop a song that is playing
-
-[lyrics:](#lyrics) Get lyrics for the song
-
-[nowplaying:](#nowplaying) Shows info about the current playing song
-
-[pause:](#pause) Pause a song that is playing
-
-[play:](#play) Play a song
-
-[queue:](#queue) Show top 20 songs in the queue
-
-[remove:](#remove) Remove a song from the queue
-
-[resume:](#resume) Resume a song that was playing
-
-[seek:](#seek) Seek thru a song
-
-[shuffle:](#shuffle) Shuffle the queue
-
-[skip:](#skip) Skip a song that is playing
-
-[stop:](#stop) stop
-
-[volume:](#volume) Set the volume between 1 to 100
-
----
-
-### Category: util
-
-**Total commands: 47**
-
-[afk:](#afk) N/A
-
-[avatar:](#avatar) Get user avatar
-
-[bmi:](#bmi) Calculate your BMI
-
-[botinfo:](#botinfo) Shows info about the bot
-
-[botinvite:](#botinvite) Returns the bot invite
-
-[bugreport:](#bugreport) Report a bug to your staff
-
-[channelinfo:](#channelinfo) Get information about a channel
-
-[channels:](#channels) Shows all channels in the server
-
-[country:](#country) Get information about a country
-
-[covid:](#covid) Get covid 19 information
-
-[ctgs:](#ctgs) Create a shortened URL
-
-[define:](#define) Define a word
-
-[dependencies:](#dependencies) Shows a list of all bots dependencies
-
-[docs:](#docs) Returns the request query from discord.js docs
-
-[emojiinfo:](#emojiinfo) Returns information about a custom emoji
-
-[emojis:](#emojis) Get a random color
-
-[enlarge:](#enlarge) get your emoji enlarged
-
-[feedback:](#feedback) Give feedback about the bot
-
-[github:](#github) Search someone on github
-
-[help:](#help) Shows all commands Or shows more info about a command
-
-[randomimage:](#randomimage) Search any image you want from google
-
-[imdb:](#imdb) Get the information about series and movie
-
-[invite:](#invite) Creates an instant invite for the server
-
-[ip:](#ip) Search an IP
-
-[membercount:](#membercount) N/A
-
-[minecraft:](#minecraft) Get info about a minecraft server
-
-[morse:](#morse) Convert a string to morse code
-
-[nasanews:](#nasanews) Looks up an astronomy-related term on NASA's Website
-
-[npm:](#npm) Search packages on npm by their name
-
-[pastebin:](#pastebin) Get a link of pastebin for your text
-
-[playstore:](#playstore) Show Playstore Application Information Of Your Given Name!
-
-[pokemon:](#pokemon) Returns a pokemon information
-
-[poll:](#poll) Create a poll
-
-[randomcolor:](#randomcolor) Get a random color
-
-[roleinfo:](#roleinfo) Shows info about a role
-
-[roles:](#roles) Shows all roles from the guild
-
-[servericon:](#servericon) Shows the server icon
-
-[serverinfo:](#serverinfo) Get info about the server
-
-[skin:](#skin) Search for skins from Minecraft
-
-[suggest:](#suggest) Create a suggestion
-
-[translate:](#translate) Translate a sentence
-
-[uptime:](#uptime) Returns the uptime of the bot
-
-[userinfo:](#userinfo) Get user info
-
-[verify:](#verify) Verify yourself to get guild access
-
-[weather:](#weather) See the weather in a country/city
-
-[web:](#web) Returns a screenshot of the requested website
-
-[wiki:](#wiki) Search something up on Wikipedia
-
----
-
-### Category: exempt
-
-**Total commands: 4**
-
-[config:](#config) Returns the config
-
-[disable:](#disable) Disables a command
-
-[enable:](#enable) Enables a command
-
-[prefix:](#prefix) Set a prefix for your server
-
----
-
-### Category: botowner
-
-**Total commands: 5**
-
-[blacklist:](#blacklist) Remove/add blacklist from a user
-
-[eval:](#eval) Eval
-
-[leaveguild:](#leaveguild) Leaves a guild by the provided Id
-
-[shell:](#shell) Execute shell commands
-
-[shutdown:](#shutdown) Shuts the bot down
-
----
-
-### Category: giveaway
-
-**Total commands: 3**
-
-[givend:](#givend) Ends a giveaway
-
-[givreroll:](#givreroll) Reroll a giveaway
-
-[givstart:](#givstart) Starts a giveaway
-
----
-
-### Category: reactions
-
-**Total commands: 2**
-
-[rradd:](#rradd) Add a reaction role
-
-[rrremove:](#rrremove) Add a reaction role
-
----
-
-### Category: reminder
-
-**Total commands: 4**
-
-[edit-reminder:](#edit-reminder) Edit an active reminder
-
-[reminders:](#reminders) All your active reminders
-
-[removereminder:](#removereminder) Remove your current reminder
-
-[setreminder:](#setreminder) Set a reminder, the bot will ping you when the timer runs out
-
----
-
-### Category: ticket
-
-**Total commands: 2**
-
-[closeticket:](#closeticket) Closes the active ticket, use --force to force close issue
-
-[createticket:](#createticket) Creates a ticket
+GhostyBot has a total of 165 slash commands.
 
 ## Detailed command list
 
-## addcmd
-
-**Category:** admin
-
-**Description:** add guild custom commands
-
-**Usage:** `<cmd_name> <cmd_response>`
-
-**Aliases:** N/A
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `command name(string)`, `command response(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## addrole
-
-**Category:** admin
+## admin -> add-role
 
 **Description:** Add a role to a user
 
-**Usage:** `<member> <role>`
+**Example usage:** /admin add-role ...
 
-**Aliases:** `ar`, `arole`, `giverole`
-
-**Member Permissions:** SEND_MESSAGES, MANAGE_ROLES, ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `member(string)`, `role(string)`
+**Options:** user (USER / Required), role (ROLE / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## addroleall
+## admin -> announce
 
-**Category:** admin
+**Description:** Announce something with a cool embed
 
-**Description:** Add a role to all user of the current server
+**Example usage:** /admin announce ...
 
-**Usage:** `<role>`
-
-**Aliases:** `arall`, `aroleall`, `giveroleall`
-
-**Member Permissions:** MANAGE_ROLES, ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `role(string)`
+**Options:** text (STRING / Required), channel (CHANNEL / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## announce
+## admin -> ban
 
-**Category:** admin
+**Description:** Ban a user from the current guild
 
-**Description:** Announce something in a channel
+**Example usage:** /admin ban ...
 
-**Usage:** `[channel] <text>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_MESSAGES
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Required), reason (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## ban
+## admin -> create-role
 
-**Category:** admin
+**Description:** Create a new role
 
-**Description:** ban
+**Example usage:** /admin create-role ...
 
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** BAN_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, BAN_MEMBERS
-
-**Required Arguments:** `user(string)`
+**Options:** name (STRING / Required), color (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## blacklistedwords
+## admin -> delete
 
-**Category:** admin
+**Description:** Delete up to 100 messages within 14 days
 
-**Description:** Add/remove blacklisted words
+**Example usage:** /admin delete ...
 
-**Usage:** `<option> [word]`
-
-**Aliases:** `wordsfilter`, `filterwords`, `blacklistedword`
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `option(string)`
+**Options:** amount (INTEGER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## config
+## admin -> kick
 
-**Category:** exempt
+**Description:** Kick a user from the current guild
 
-**Description:** Returns the config
+**Example usage:** /admin kick ...
 
-**Usage:** `N/A`
-
-**Aliases:** `conf`, `cfg`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Required), reason (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## createrole
+## admin -> lock-channel
 
-**Category:** admin
+**Description:** Lock the current channel
 
-**Description:** This command creates a role with the name of what you say
+**Example usage:** /admin lock-channel ...
 
-**Usage:** `<role_name>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_ROLES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `role name(string)`
+**Options:** reason (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## ctopic
+## admin -> mute
 
-**Category:** admin
+**Description:** Timeout a user
 
-**Description:** Update the channel topic
+**Example usage:** /admin mute ...
 
-**Usage:** `<channel> <topic>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_CHANNELS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
+**Options:** user (USER / Required), time (STRING / Required), reason (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## deafen
+## admin -> nuke
 
-**Category:** admin
+**Description:** Nuke the current channel. Note: The channel will instantly be deleted and re-created.
 
-**Description:** Deafen a user
+**Example usage:** /admin nuke ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** DEAFEN_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, DEAFEN_MEMBERS
-
-**Required Arguments:** `member(string)`, `reason(string)`
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## delcmd
+## admin -> remove-role
 
-**Category:** admin
+**Description:** Remove a role to a user
 
-**Description:** Delete the custom commannd
+**Example usage:** /admin remove-role ...
 
-**Usage:** `<cmd_name>`
-
-**Aliases:** `removecmd`
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `command name(string)`
+**Options:** user (USER / Required), role (ROLE / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## delete
+## admin-> sticky -> remove
 
-**Category:** admin
+**Description:** Remove the sticky message for the current channel
 
-**Description:** Delete message, up to 100
+**Example usage:** /admin sticky remove ...
 
-**Usage:** `<1-100>`
-
-**Aliases:** `purge`, `clear`
-
-**Member Permissions:** MANAGE_MESSAGES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_MESSAGES
-
-**Required Arguments:** `amount(number)`
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## disable
-
-**Category:** exempt
-
-**Description:** Disables a command
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `command name | category name(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## enable
-
-**Category:** exempt
-
-**Description:** Enables a command
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `command name | category name(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## ignoredchannels
-
-**Category:** admin
-
-**Description:** Add/remove ignored channels
-
-**Usage:** `<option> <channel>`
-
-**Aliases:** `igch`, `ic`
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `option(string)`, `channel(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## kick
-
-**Category:** admin
-
-**Description:** Kick a user
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** KICK_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, KICK_MEMBERS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## lockchannel
-
-**Category:** admin
-
-**Description:** Lock A channel
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_CHANNELS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** `reason(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## mute
-
-**Category:** admin
-
-**Description:** Mute a user
-
-**Usage:** `<@user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_ROLES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## nuke
-
-**Category:** admin
-
-**Description:** Nuke the current channel, delete all messages of the channel
-
-**Usage:** `N/A`
-
-**Aliases:** `channelnuke`
-
-**Member Permissions:** MANAGE_CHANNELS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## prefix
-
-**Category:** exempt
-
-**Description:** Set a prefix for your server
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## removerole
-
-**Category:** admin
-
-**Description:** Remove a role from a user
-
-**Usage:** `N/A`
-
-**Aliases:** `rr`, `rrole`, `takerole`
-
-**Member Permissions:** MANAGE_ROLES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `member(string)`, `role(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## removeroleall
-
-**Category:** admin
-
-**Description:** remove a role from all users of the current server
-
-**Usage:** `N/A`
-
-**Aliases:** `rrall`, `rroleall`, `takeroleall`
-
-**Member Permissions:** MANAGE_ROLES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `role(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## removeuserwarns
-
-**Category:** admin
-
-**Description:** Remove all warns from a user
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## say
-
-**Category:** admin
+## admin -> say
 
 **Description:** Let the bot say something
 
-**Usage:** `N/A`
+**Example usage:** /admin say ...
 
-**Aliases:** N/A
+**Options:** text (STRING / Required), embed (BOOLEAN / Optional)
 
-**Member Permissions:** MANAGE_MESSAGES
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text | type(embed)(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## set
-
-**Category:** admin
-
-**Description:** N/A
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## stealemoji
-
-**Category:** admin
-
-**Description:** Steal an emoji from a different server
-
-**Usage:** `<emoji> [custom name]`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_EMOJIS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_EMOJIS
-
-**Required Arguments:** `emoji(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## sticky
-
-**Category:** admin
-
-**Description:** Sticky a message to the bottom of the screen
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_MESSAGES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_MESSAGES
-
-**Required Arguments:** `message(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## tempmute
-
-**Category:** admin
-
-**Description:** Temporary mute someone
-
-**Usage:** `<user> <time> <reason>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_ROLES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES, MANAGE_CHANNELS
-
-**Required Arguments:** `user(string)`, `time(time)`, `reason(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## unban
-
-**Category:** admin
-
-**Description:** unban a user by their id
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** BAN_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, BAN_MEMBERS
-
-**Required Arguments:** `member_id(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## undeafen
-
-**Category:** admin
-
-**Description:** Undeafen a user from voice channel
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** DEAFEN_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, DEAFEN_MEMBERS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## unlockchannel
-
-**Category:** admin
-
-**Description:** Unlock A channel
-
-**Usage:** `<channel mention | current channel>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_CHANNELS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## unmute
-
-**Category:** admin
-
-**Description:** Unmute a user
-
-**Usage:** `<@user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_ROLES, MANAGE_CHANNELS
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## unset
-
-**Category:** admin
-
-**Description:** N/A
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## unsticky
-
-**Category:** admin
-
-**Description:** Sticky a message to the bottom of the screen
-
-**Usage:** `N/A`
-
-**Aliases:** `removesticky`
-
-**Member Permissions:** MANAGE_MESSAGES
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_MESSAGES, ADMINISTRATOR
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## voicekick
-
-**Category:** admin
-
-**Description:** voicekick or disconnect a user from a voice channel
-
-**Usage:** `<user>`
-
-**Aliases:** `disconnect`
-
-**Member Permissions:** MOVE_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, MOVE_MEMBERS
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## voicemute
-
-**Category:** admin
-
-**Description:** voicemute a user
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MUTE_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, MUTE_MEMBERS
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## voiceunmute
-
-**Category:** admin
-
-**Description:** unmute a user from voice channel
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MUTE_MEMBERS
-
-**Bot Permissions:** SEND_MESSAGES, MUTE_MEMBERS
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## warn
-
-**Category:** admin
-
-**Description:** Warns a user
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## warnings
-
-**Category:** admin
-
-**Description:** Returns how many warnings a user has
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `user(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## bird
-
-**Category:** animal
-
-**Description:** Returns an image of a bird
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## bunny
-
-**Category:** animal
-
-**Description:** Shows a picture of a bunny
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## cat
-
-**Category:** animal
-
-**Description:** Shows a picture of a cat
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## catfact
-
-**Category:** animal
-
-**Description:** Returns a cat fact
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## cow
-
-**Category:** animal
-
-**Description:** Returns a cow ascii
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## cowsay
-
-**Category:** animal
-
-**Description:** Let a cow say something
-
-**Usage:** `<text>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## dog
-
-**Category:** animal
-
-**Description:** Shows a picture of a dog
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## dogfact
-
-**Category:** animal
-
-**Description:** Returns a dog fact
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## duck
-
-**Category:** animal
-
-**Description:** Shows a picture of a duck
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## fox
-
-**Category:** animal
-
-**Description:** Shows a picture of a fox
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## kangaroo
-
-**Category:** animal
-
-**Description:** An image of a kangaroo
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## koala
-
-**Category:** animal
-
-**Description:** Shows a random picture of koala
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## lizard
-
-**Category:** animal
-
-**Description:** Shows a picture of a lizard
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## owl
-
-**Category:** animal
-
-**Description:** Shows a picture of a owl
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## panda
-
-**Category:** animal
-
-**Description:** Shows a picture of a panda
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## racoon
-
-**Category:** animal
-
-**Description:** Shows an image of a raccoon
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## red-panda
-
-**Category:** animal
-
-**Description:** An image of a red panda
-
-**Usage:** `N/A`
-
-**Aliases:** `redpanda`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## shibe
-
-**Category:** animal
-
-**Description:** Returns an image of a shibe
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## whale
-
-**Category:** animal
-
-**Description:** Shows an image of a whale
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## blacklist
-
-**Category:** botowner
-
-**Description:** Remove/add blacklist from a user
-
-**Usage:** `<option> <level> <user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## eval
-
-**Category:** botowner
-
-**Description:** Eval
-
-**Usage:** `N/A`
-
-**Aliases:** `e`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## leaveguild
-
-**Category:** botowner
-
-**Description:** Leaves a guild by the provided Id
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## shell
-
-**Category:** botowner
-
-**Description:** Execute shell commands
-
-**Usage:** `N/A`
-
-**Aliases:** `cmd`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `code(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## shutdown
-
-**Category:** botowner
-
-**Description:** Shuts the bot down
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## addmoney
-
-**Category:** economy
-
-**Description:** Add money to a user
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`, `amount(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## balance
-
-**Category:** economy
-
-**Description:** balance
-
-**Usage:** `N/A`
-
-**Aliases:** `bal`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## buy
-
-**Category:** economy
-
-**Description:** Buy an item from the store
-
-**Usage:** `<item name>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `item name(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## daily
-
-**Category:** economy
-
-**Description:** daily
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## deposit
-
-**Category:** economy
-
-**Description:** deposit money to your bank
-
-**Usage:** `<all | amount>`
-
-**Aliases:** `dep`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `amount(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## dice
-
-**Category:** economy
-
-**Description:** Roll a dice
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## inventory
-
-**Category:** economy
-
-**Description:** View your or a user inventory
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## moneyleaderboard
-
-**Category:** economy
-
-**Description:** Returns a leaderboard with the top 10 users money
-
-**Usage:** `N/A`
-
-**Aliases:** `mlb`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## pay
-
-**Category:** economy
-
-**Description:** Give money to a user
-
-**Usage:** `<member>, <amount>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`, `amount(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## profile
-
-**Category:** economy
-
-**Description:** See the full profile of a user
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## removemoney
-
-**Category:** economy
-
-**Description:** Remove money to a user
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`, `amount(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## reseteconomy
-
-**Category:** economy
-
-**Description:** Reset all money/bank in this guild
-
-**Usage:** `N/A`
-
-**Aliases:** `reset-economy`
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## rob
-
-**Category:** economy
-
-**Description:** Rob up to 1000coins from somebody
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`, `amount(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## slots
-
-**Category:** economy
-
-**Description:** Slots machine
-
-**Usage:** `<amount>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## store
-
-**Category:** economy
-
-**Description:** View the store/shop to buy something
-
-**Usage:** `<option | no-args>`
-
-**Aliases:** `shop`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## weekly
-
-**Category:** economy
-
-**Description:** Collect your weekly price
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## withdraw
-
-**Category:** economy
-
-**Description:** Withdraw money to your bank
-
-**Usage:** `<all | amount>`
-
-**Aliases:** `with`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `amount(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## work
-
-**Category:** economy
-
-**Description:** work
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## 8ball
-
-**Category:** games
-
-**Description:** 8Ball
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## advice
-
-**Category:** games
-
-**Description:** Gives you advice
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## ascii
-
-**Category:** games
-
-**Description:** Transform text to ascii
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## bet
-
-**Category:** games
-
-**Description:** Bet on somebody
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## block
-
-**Category:** games
-
-**Description:** Write text with blocks
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## calc
-
-**Category:** games
-
-**Description:** Calculate something
-
-**Usage:** `N/A`
-
-**Aliases:** `math`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `calculation(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## compliment
-
-**Category:** games
-
-**Description:** Get a compliment
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## dadjoke
-
-**Category:** games
-
-**Description:** Shows a dadjoke
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## flipcoin
-
-**Category:** games
-
-**Description:** Flip a coin
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## happiness
-
-**Category:** games
-
-**Description:** Get a happiness returned
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## iq
-
-**Category:** games
-
-**Description:** Get a random Iq returned
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
 [Back to top](#ghostybot-command-list)
 
-## lmgtfy
+## admin-> sticky -> set
 
-**Category:** games
+**Description:** Set a new sticky message for the current channel
 
-**Description:** Let me google that for you
+**Example usage:** /admin sticky set ...
 
-**Usage:** `<search query>`
+**Options:** text (STRING / Required)
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
-
 [Back to top](#ghostybot-command-list)
-
-## meme
-
-**Category:** games
-
-**Description:** Returns a meme
-
-**Usage:** `N/A`
 
-**Aliases:** N/A
+## admin -> steal-emoji
 
-**Member Permissions:** None
+**Description:** Add an emoji from a different guild to this guild
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin steal-emoji ...
 
-**Required Arguments:** N/A
+**Options:** emoji (STRING / Required), name (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## randomjoke
+## admin -> temp-role
 
-**Category:** games
+**Description:** Give someone a role for a period of time
 
-**Description:** returns a random joke
+**Example usage:** /admin temp-role ...
 
-**Usage:** `N/A`
+**Options:** user (USER / Required), role (ROLE / Required), time (STRING / Required)
 
-**Aliases:** `joke`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
 [Back to top](#ghostybot-command-list)
-
-## randomnumber
-
-**Category:** games
-
-**Description:** Returns a random 6 digit number
-
-**Usage:** `N/A`
 
-**Aliases:** `number`
+## admin -> unban
 
-**Member Permissions:** None
+**Description:** Unban a member from the current guild
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin unban ...
 
-**Required Arguments:** N/A
+**Options:** user-id (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## rps
+## admin -> unlock-channel
 
-**Category:** games
+**Description:** Unlock the current channel
 
-**Description:** Rock Paper Scissors
+**Example usage:** /admin unlock-channel ...
 
-**Usage:** `<rock | paper | scissors>`
+**Options:** N/A
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `rock | paper | scissors(string)`
-
 [Back to top](#ghostybot-command-list)
-
-## tictactoe
-
-**Category:** games
-
-**Description:** Play a game of tictactoe
-
-**Usage:** `N/A`
 
-**Aliases:** `ttt`, `tttoe`
+## admin -> unmute
 
-**Member Permissions:** None
+**Description:** Remove a timeout from a user
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin unmute ...
 
-**Required Arguments:** `member(string)`
+**Options:** user (USER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## wyr
+## admin-> voice -> deafen
 
-**Category:** games
+**Description:** Deafen a user that is in a voice channel
 
-**Description:** Would you rather
+**Example usage:** /admin voice deafen ...
 
-**Usage:** `N/A`
+**Options:** user (USER / Required), reason (STRING / Optional)
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
 [Back to top](#ghostybot-command-list)
-
-## givend
-
-**Category:** giveaway
-
-**Description:** Ends a giveaway
-
-**Usage:** `givend <messageId> **Example:** !giveaway end <messageId>`
 
-**Aliases:** `gend`
+## admin-> voice -> kick
 
-**Member Permissions:** MANAGE_GUILD
+**Description:** Kick a user that is in a voice channel
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin voice kick ...
 
-**Required Arguments:** `messageId(string)`
+**Options:** user (USER / Required), reason (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## givreroll
+## admin-> voice -> mute
 
-**Category:** giveaway
+**Description:** Mute a user that is in a voice channel
 
-**Description:** Reroll a giveaway
+**Example usage:** /admin voice mute ...
 
-**Usage:** `N/A`
+**Options:** user (USER / Required), reason (STRING / Optional)
 
-**Aliases:** `greroll`
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `messageId(string)`
-
 [Back to top](#ghostybot-command-list)
-
-## givstart
-
-**Category:** giveaway
-
-**Description:** Starts a giveaway
-
-**Usage:** `<time> <winner count> <price> **Example:** !givstart 2d 10 Discord nitro`
 
-**Aliases:** `gstart`
+## admin-> voice -> undeafen
 
-**Member Permissions:** MANAGE_GUILD
+**Description:** Undeafen a user that is in a voice channel
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin voice undeafen ...
 
-**Required Arguments:** `time(time)`, `winnerCount(number)`, `prize(string)`
+**Options:** user (USER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## ad
+## admin-> voice -> unmute
 
-**Category:** image
+**Description:** Unmute a user that is in a voice channel
 
-**Description:** Shows an amazing advertisement
+**Example usage:** /admin voice unmute ...
 
-**Usage:** `N/A`
+**Options:** user (USER / Required)
 
-**Aliases:** `advertisement`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
 [Back to top](#ghostybot-command-list)
-
-## amazeme
-
-**Category:** image
-
-**Description:** Shows interesting images or facts
-
-**Usage:** `N/A`
 
-**Aliases:** N/A
+## admin-> warnings -> remove
 
-**Member Permissions:** None
+**Description:** Remove a warning from a user
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin warnings remove ...
 
-**Required Arguments:** N/A
+**Options:** user (USER / Required), warning-id (INTEGER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## amazingearth
+## admin -> warn
 
-**Category:** image
+**Description:** Warn a user
 
-**Description:** Amazing images of light and landscape
+**Example usage:** /admin warn ...
 
-**Usage:** `N/A`
+**Options:** user (USER / Required), reason (STRING / Optional)
 
-**Aliases:** `earthporn`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
 [Back to top](#ghostybot-command-list)
-
-## baka
-
-**Category:** image
-
-**Description:** None
-
-**Usage:** `N/A`
 
-**Aliases:** N/A
+## admin-> warnings -> view
 
-**Member Permissions:** None
+**Description:** View warnings of a user
 
-**Bot Permissions:** SEND_MESSAGES
+**Example usage:** /admin warnings view ...
 
-**Required Arguments:** N/A
+**Options:** user (USER / Required), warning-id (INTEGER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## changemymind
+## animal
 
-**Category:** image
+**Description:** Returns an image of an animal
 
-**Description:** Change my mind
+**Example usage:** /animal ...
 
-**Usage:** `N/A`
+**Options:** type (STRING / Required)
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
 [Back to top](#ghostybot-command-list)
 
-## clyde
+## anime -> baka
 
-**Category:** image
+**Description:** Baka?
 
-**Description:** Let clyde say something
+**Example usage:** /anime baka ...
 
-**Usage:** `N/A`
+**Options:** N/A
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
 [Back to top](#ghostybot-command-list)
-
-## cuddle
 
-**Category:** image
+## anime -> cuddle
 
 **Description:** Cuddle with somebody
 
-**Usage:** `N/A`
+**Example usage:** /anime cuddle ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## feed
+## anime -> feed
 
-**Category:** image
+**Description:** Feed somebody
 
-**Description:** feed somebody
+**Example usage:** /anime feed ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## foodporn
-
-**Category:** image
-
-**Description:** Shows Food images
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## giphy
-
-**Category:** image
-
-**Description:** Return a giphy image
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## hug
-
-**Category:** image
+## anime -> hug
 
 **Description:** Shows a picture of people hugging
 
-**Usage:** `N/A`
+**Example usage:** /anime hug ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## imgfy
-
-**Category:** image
-
-**Description:** text to image converter xD
-
-**Usage:** `N/A`
-
-**Aliases:** `texttoimage`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## invert
-
-**Category:** image
-
-**Description:** Invert your avatar
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## kiss
-
-**Category:** image
+## anime -> kiss
 
 **Description:** Shows a picture of people kissing
 
-**Usage:** `N/A`
+**Example usage:** /anime kiss ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## magik
-
-**Category:** image
-
-**Description:** Just Magik
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## owo
-
-**Category:** image
+## anime -> owo
 
 **Description:** OwO
 
-**Usage:** `N/A`
+**Example usage:** /anime owo ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## pat
-
-**Category:** image
+## anime -> pat
 
 **Description:** Pat somebody
 
-**Usage:** `N/A`
+**Example usage:** /anime pat ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## pikachu
-
-**Category:** image
-
-**Description:** An image of a pikachu
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## poke
-
-**Category:** image
+## anime -> poke
 
 **Description:** Poke somebody
 
-**Usage:** `N/A`
+**Example usage:** /anime poke ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## slap
-
-**Category:** image
+## anime -> slap
 
 **Description:** Slap somebody
 
-**Usage:** `N/A`
+**Example usage:** /anime slap ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## smug
-
-**Category:** image
+## anime -> smug
 
 **Description:** Smug
 
-**Usage:** `N/A`
+**Example usage:** /anime smug ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## supreme
+## bot-owner-> blacklist -> add
 
-**Category:** image
+**Description:** Blacklist a user from the bot
 
-**Description:** Display custom text as the Supreme logo
+**Example usage:** /bot-owner blacklist add ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, ATTACH_FILES
-
-**Required Arguments:** `text(string)`
+**Options:** user (USER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## threshold
+## bot-owner-> blacklist -> remove
 
-**Category:** image
+**Description:** Remove a user from the blacklist
 
-**Description:** threshold your avatar
+**Example usage:** /bot-owner blacklist remove ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** user (USER / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## trash
+## bot-owner -> eval
 
-**Category:** image
+**Description:** Execute a piece of code
 
-**Description:** Put someone in the trash bin someone
+**Example usage:** /bot-owner eval ...
 
-**Usage:** `N/A`
-
-**Aliases:** `delete`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** code (STRING / Required), ephemeral (BOOLEAN / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## tweet
+## bot-owner -> leave-guild
 
-**Category:** image
+**Description:** Leave a guild by id
+
+**Example usage:** /bot-owner leave-guild ...
+
+**Options:** id (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> add-money
+
+**Description:** Add money to a user
+
+**Example usage:** /economy add-money ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> balance
+
+**Description:** See the balance of a user
+
+**Example usage:** /economy balance ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> buy
+
+**Description:** Buy something from the store
+
+**Example usage:** /economy buy ...
+
+**Options:** item (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> daily
+
+**Description:** Claim your daily
+
+**Example usage:** /economy daily ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> deposit
+
+**Description:** Deposit money to your bank
+
+**Example usage:** /economy deposit ...
+
+**Options:** amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> dice
+
+**Description:** Roll a dice and win 200 coins
+
+**Example usage:** /economy dice ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> inventory
+
+**Description:** See the inventory of a user
+
+**Example usage:** /economy inventory ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> money-leaderboard
+
+**Description:** See the money leaderboard
+
+**Example usage:** /economy money-leaderboard ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> pay
+
+**Description:** Give money to a user
+
+**Example usage:** /economy pay ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> profile
+
+**Description:** See the profile of a user
+
+**Example usage:** /economy profile ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> remove-money
+
+**Description:** Remove money to a user
+
+**Example usage:** /economy remove-money ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> rob
+
+**Description:** Rob up to 1000 coins from somebody
+
+**Example usage:** /economy rob ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> slots
+
+**Description:** Play the slots machine
+
+**Example usage:** /economy slots ...
+
+**Options:** amount (NUMBER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> store
+
+**Description:** See items in the store
+
+**Example usage:** /economy store ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> weekly
+
+**Description:** Claim your weekly
+
+**Example usage:** /economy weekly ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> withdraw
+
+**Description:** Withdraw money to your bank
+
+**Example usage:** /economy withdraw ...
+
+**Options:** amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## economy -> work
+
+**Description:** Work!
+
+**Example usage:** /economy work ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> 8ball
+
+**Description:** 8Ball
+
+**Example usage:** /fun 8ball ...
+
+**Options:** question (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> advice
+
+**Description:** Gives you advice
+
+**Example usage:** /fun advice ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> ascii
+
+**Description:** Transform text to ascii
+
+**Example usage:** /fun ascii ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> bet
+
+**Description:** Bet on somebody
+
+**Example usage:** /fun bet ...
+
+**Options:** user (USER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> block
+
+**Description:** Transform text to block text
+
+**Example usage:** /fun block ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> compliment
+
+**Description:** Get a compliment
+
+**Example usage:** /fun compliment ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> dad-joke
+
+**Description:** Returns a dad joke
+
+**Example usage:** /fun dad-joke ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> flip-coin
+
+**Description:** Flip a coin
+
+**Example usage:** /fun flip-coin ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> happiness
+
+**Description:** Get a happiness score returned
+
+**Example usage:** /fun happiness ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> iq
+
+**Description:** Get an IQ score returned
+
+**Example usage:** /fun iq ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> lmgtfy
+
+**Description:** Let me google that for ya?
+
+**Example usage:** /fun lmgtfy ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> meme
+
+**Description:** Returns a funny meme
+
+**Example usage:** /fun meme ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> morse
+
+**Description:** Transform text to morse code
+
+**Example usage:** /fun morse ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> quote
+
+**Description:** Returns a random quote
+
+**Example usage:** /fun quote ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> random-color
+
+**Description:** Returns a random color
+
+**Example usage:** /fun random-color ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> random-joke
+
+**Description:** Returns a random joke
+
+**Example usage:** /fun random-joke ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> random-number
+
+**Description:** Returns a random number
+
+**Example usage:** /fun random-number ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> rock-paper-scissors
+
+**Description:** Rock Paper Scissors
+
+**Example usage:** /fun rock-paper-scissors ...
+
+**Options:** item (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## fun -> would-you-rather
+
+**Description:** Would you rather..
+
+**Example usage:** /fun would-you-rather ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## giveaway -> end
+
+**Description:** End a giveaway
+
+**Example usage:** /giveaway end ...
+
+**Options:** message-id (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## giveaway -> reroll
+
+**Description:** Re-roll a giveaway
+
+**Example usage:** /giveaway reroll ...
+
+**Options:** message-id (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## giveaway -> start
+
+**Description:** Start a new giveaway
+
+**Example usage:** /giveaway start ...
+
+**Options:** time (STRING / Required), prize (STRING / Required), winner-count (INTEGER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> achievement
+
+**Description:** Render a Minecraft achievement
+
+**Example usage:** /image achievement ...
+
+**Options:** text (STRING / Required), icon (INTEGER / Optional), title (STRING / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> amazing-earth
+
+**Description:** Amazing images of light and landscape
+
+**Example usage:** /image amazing-earth ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## image -> change-my-mind
+
+**Description:** Change my mind..
+
+**Example usage:** /image change-my-mind ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> clyde
+
+**Description:** Let clyde say something
+
+**Example usage:** /image clyde ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> foodporn
+
+**Description:** Shows Food images
+
+**Example usage:** /image foodporn ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## image -> giphy
+
+**Description:** Return a giphy image
+
+**Example usage:** /image giphy ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> imgfy
+
+**Description:** text to image converter
+
+**Example usage:** /image imgfy ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> invert
+
+**Description:** Invert an avatar
+
+**Example usage:** /image invert ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> magik
+
+**Description:** Just Magik.
+
+**Example usage:** /image magik ...
+
+**Options:** user (USER / Optional), intensity (INTEGER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> pikachu
+
+**Description:** Returns an image of a pikachu
+
+**Example usage:** /image pikachu ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## image -> pornhub
+
+**Description:** Render an image as the Pornhub logo
+
+**Example usage:** /image pornhub ...
+
+**Options:** left-text (STRING / Required), right-text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> supreme
+
+**Description:** Render an image as the Supreme logo
+
+**Example usage:** /image supreme ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> threshold
+
+**Description:** threshold an avatar
+
+**Example usage:** /image threshold ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> trash
+
+**Description:** Put someone in the trash
+
+**Example usage:** /image trash ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## image -> tweet
 
 **Description:** Returns an image with your tweet
 
-**Usage:** `N/A`
+**Example usage:** /image tweet ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
+**Options:** text (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## ytcomment
-
-**Category:** image
+## image -> yt-comment
 
 **Description:** Returns an image with your YouTube comment
 
-**Usage:** `<my amazing youtube comment>`
+**Example usage:** /image yt-comment ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `comment(string)`
+**Options:** text (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## givexp
+## info -> bot
 
-**Category:** levels
+**Description:** Get information about GhostyBot
 
-**Description:** Give someone Xp
+**Example usage:** /info bot ...
 
-**Usage:** `<user> <amount>`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `member(string)`, `amount(number)`
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## leaderboard
-
-**Category:** levels
-
-**Description:** Shows top 10 users with the highest amount of XP
-
-**Usage:** `N/A`
-
-**Aliases:** `lb`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## level
-
-**Category:** levels
-
-**Description:** Get your current level
-
-**Usage:** `N/A`
-
-**Aliases:** `lvl`, `rank`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, ATTACH_FILES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## resetxp
-
-**Category:** levels
-
-**Description:** reset all users xp for current server
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** MANAGE_GUILD
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## xp
-
-**Category:** levels
-
-**Description:** Get xp from a user or yourself
-
-**Usage:** `<user>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## back
-
-**Category:** music
-
-**Description:** Play back the previous song
-
-**Usage:** `N/A`
-
-**Aliases:** `prev`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## clearqueue
-
-**Category:** music
-
-**Description:** Clear the music playlist
-
-**Usage:** `N/A`
-
-**Aliases:** `cq`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## filter
-
-**Category:** music
-
-**Description:** Set or remove a filter
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `option(string)`, `filter(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## filters
-
-**Category:** music
-
-**Description:** All music filters
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## loop
-
-**Category:** music
-
-**Description:** Loop a song that is playing
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## lyrics
-
-**Category:** music
-
-**Description:** Get lyrics for the song
-
-**Usage:** `N/A`
-
-**Aliases:** `ly`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## nowplaying
-
-**Category:** music
-
-**Description:** Shows info about the current playing song
-
-**Usage:** `N/A`
-
-**Aliases:** `np`, `currentsong`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## pause
-
-**Category:** music
-
-**Description:** Pause a song that is playing
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## play
-
-**Category:** music
-
-**Description:** Play a song
-
-**Usage:** `<youtube link | song name>`
-
-**Aliases:** `p`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `song(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## queue
-
-**Category:** music
-
-**Description:** Show top 20 songs in the queue
-
-**Usage:** `N/A`
-
-**Aliases:** `q`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## remove
-
-**Category:** music
-
-**Description:** Remove a song from the queue
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `track-number(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## resume
-
-**Category:** music
-
-**Description:** Resume a song that was playing
-
-**Usage:** `N/A`
-
-**Aliases:** `r`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## seek
-
-**Category:** music
-
-**Description:** Seek thru a song
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `seconds/minutes(time)`
-
-[Back to top](#ghostybot-command-list)
-
-## shuffle
-
-**Category:** music
-
-**Description:** Shuffle the queue
-
-**Usage:** `N/A`
-
-**Aliases:** `sh`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## skip
-
-**Category:** music
-
-**Description:** Skip a song that is playing
-
-**Usage:** `N/A`
-
-**Aliases:** `s`, `sk`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## stop
-
-**Category:** music
-
-**Description:** stop
-
-**Usage:** `N/A`
-
-**Aliases:** `leave`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## volume
-
-**Category:** music
-
-**Description:** Set the volume between 1 to 100
-
-**Usage:** `N/A`
-
-**Aliases:** `vol`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## rradd
-
-**Category:** reactions
-
-**Description:** Add a reaction role
-
-**Usage:** `<channel_id>`
-
-**Aliases:** N/A
-
-**Member Permissions:** ADMINISTRATOR
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_ROLES, ADD_REACTIONS, MANAGE_MESSAGES
-
-**Required Arguments:** `channel_id(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## rrremove
-
-**Category:** reactions
-
-**Description:** Add a reaction role
-
-**Usage:** `<message_id>`
-
-**Aliases:** `rrdel`, `rrr`, `rrdelete`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `message_id(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## edit-reminder
-
-**Category:** reminder
-
-**Description:** Edit an active reminder
-
-**Usage:** `edit-reminder <reminder-id> <new-time> <new message>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `id(string)`, `time(time)`, `description(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## reminders
-
-**Category:** reminder
-
-**Description:** All your active reminders
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## removereminder
-
-**Category:** reminder
-
-**Description:** Remove your current reminder
-
-**Usage:** `removereminder <id, 'last', 'first'>`
-
-**Aliases:** `delreminder`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `reminder_id(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## setreminder
-
-**Category:** reminder
-
-**Description:** Set a reminder, the bot will ping you when the timer runs out
-
-**Usage:** `<time> <message>`
-
-**Aliases:** `addreminder`, `remind`, `remindme`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `time(time)`, `message(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## closeticket
-
-**Category:** ticket
-
-**Description:** Closes the active ticket, use --force to force close issue
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## createticket
-
-**Category:** ticket
-
-**Description:** Creates a ticket
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, MANAGE_CHANNELS
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## afk
-
-**Category:** util
-
-**Description:** N/A
-
-**Usage:** `N/A`
-
-**Aliases:** `setafk`, `makemeafk`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## avatar
-
-**Category:** util
-
-**Description:** Get user avatar
-
-**Usage:** `N/A`
-
-**Aliases:** `av`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## bmi
-
-**Category:** util
-
-**Description:** Calculate your BMI
-
-**Usage:** `<weight in kilograms> <height in centimeters>`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `weight(number)`, `height(number)`
-
-[Back to top](#ghostybot-command-list)
-
-## botinfo
-
-**Category:** util
-
-**Description:** Shows info about the bot
-
-**Usage:** `N/A`
-
-**Aliases:** `bot`, `ping`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## botinvite
-
-**Category:** util
-
-**Description:** Returns the bot invite
-
-**Usage:** `N/A`
-
-**Aliases:** `botinv`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## bugreport
-
-**Category:** util
-
-**Description:** Report a bug to your staff
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `report(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## channelinfo
-
-**Category:** util
+## info -> channel
 
 **Description:** Get information about a channel
 
-**Usage:** `N/A`
+**Example usage:** /info channel ...
 
-**Aliases:** `channel`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** channel (CHANNEL / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## channels
-
-**Category:** util
-
-**Description:** Shows all channels in the server
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## country
-
-**Category:** util
+## info -> country
 
 **Description:** Get information about a country
 
-**Usage:** `<country>`
+**Example usage:** /info country ...
 
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `country(string)`
+**Options:** country (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## covid
+## info -> covid
 
-**Category:** util
+**Description:** Get COVID-19 information
 
-**Description:** Get covid 19 information
+**Example usage:** /info covid ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** country (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## ctgs
+## info -> emoji
 
-**Category:** util
+**Description:** Get information about an emoji
 
-**Description:** Create a shortened URL
+**Example usage:** /info emoji ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `slug(string)`, `url(string)`
+**Options:** emoji (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## define
+## info -> github
 
-**Category:** util
+**Description:** Get information about a GitHub user
 
-**Description:** Define a word
+**Example usage:** /info github ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `word(string)`
+**Options:** username (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## dependencies
+## info -> guild
 
-**Category:** util
+**Description:** Get information about the current guild
 
-**Description:** Shows a list of all bots dependencies
+**Example usage:** /info guild ...
 
-**Usage:** `N/A`
+**Options:** N/A
 
-**Aliases:** `deps`
+[Back to top](#ghostybot-command-list)
 
-**Member Permissions:** None
+## info -> imdb
 
-**Bot Permissions:** SEND_MESSAGES
+**Description:** Get information about a series or a movie
 
-**Required Arguments:** N/A
+**Example usage:** /info imdb ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> invite
+
+**Description:** Get information about an invite code
+
+**Example usage:** /info invite ...
+
+**Options:** code (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> ip
+
+**Description:** Get information about an IP address
+
+**Example usage:** /info ip ...
+
+**Options:** ip (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> minecraft
+
+**Description:** Get info about a minecraft server
+
+**Example usage:** /info minecraft ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> npm
+
+**Description:** Search packages on npm by their name
+
+**Example usage:** /info npm ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> playstore
+
+**Description:** Show information about an app on the PlayStore
+
+**Example usage:** /info playstore ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> pokemon
+
+**Description:** Returns a pokémon information
+
+**Example usage:** /info pokemon ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> role
+
+**Description:** Get information about a role in the current guild
+
+**Example usage:** /info role ...
+
+**Options:** role (ROLE / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> spotify
+
+**Description:** Find a track/artist/album via the Spotify API
+
+**Example usage:** /info spotify ...
+
+**Options:** type (STRING / Required), query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> user
+
+**Description:** Get information about a user
+
+**Example usage:** /info user ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## info -> weather
+
+**Description:** Get information about a country
+
+**Example usage:** /info weather ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## levels -> give-xp
+
+**Description:** Give a user xp
+
+**Example usage:** /levels give-xp ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## levels -> leaderboard
+
+**Description:** Shows top 10 users with the highest amount of XP
+
+**Example usage:** /levels leaderboard ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## levels -> rank
+
+**Description:** Get the rank of a user or yourself
+
+**Example usage:** /levels rank ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## levels -> remove-xp
+
+**Description:** Remove xp from a user
+
+**Example usage:** /levels remove-xp ...
+
+**Options:** user (USER / Required), amount (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## levels -> xp
+
+**Description:** Get the xp of a user or yourself
+
+**Example usage:** /levels xp ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> clear-queue
+
+**Description:** Clear the current music queue
+
+**Example usage:** /music clear-queue ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> filter
+
+**Description:** Set or remove a filter for the current queue
+
+**Example usage:** /music filter ...
+
+**Options:** filter (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> loop
+
+**Description:** Loop a song that is playing
+
+**Example usage:** /music loop ...
+
+**Options:** type (INTEGER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> lyrics
+
+**Description:** Get lyrics for a song
+
+**Example usage:** /music lyrics ...
+
+**Options:** query (STRING / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> now-playing
+
+**Description:** Shows information about the current playing song
+
+**Example usage:** /music now-playing ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> pause
+
+**Description:** Pause the song that is playing
+
+**Example usage:** /music pause ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> play
+
+**Description:** Play a song
+
+**Example usage:** /music play ...
+
+**Options:** query (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> queue
+
+**Description:** Show top 20 songs in the queue
+
+**Example usage:** /music queue ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> remove
+
+**Description:** Remove a song from the queue
+
+**Example usage:** /music remove ...
+
+**Options:** track-number (INTEGER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> resume
+
+**Description:** Resume the queue
+
+**Example usage:** /music resume ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> seek
+
+**Description:** Seek through a song
+
+**Example usage:** /music seek ...
+
+**Options:** time (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## music -> shuffle
+
+**Description:** Shuffle the current queue
+
+**Example usage:** /music shuffle ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> skip
+
+**Description:** Skip the song that is playing
+
+**Example usage:** /music skip ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> stop
+
+**Description:** Stop the current queue
+
+**Example usage:** /music stop ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## music -> volume
+
+**Description:** Set the volume for the current queue
+
+**Example usage:** /music volume ...
+
+**Options:** volume (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## reminders -> create
+
+**Description:** Create a new reminder
+
+**Example usage:** /reminders create ...
+
+**Options:** time (STRING / Required), message (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## reminders -> edit
+
+**Description:** Edit one of your reminders
+
+**Example usage:** /reminders edit ...
+
+**Options:** id (STRING / Required), time (STRING / Required), message (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## reminders -> delete
+
+**Description:** Delete one of your reminders
+
+**Example usage:** /reminders delete ...
+
+**Options:** id (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## reminders -> view
+
+**Description:** View all your reminders
+
+**Example usage:** /reminders view ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## tickets -> close
+
+**Description:** Close your ticket
+
+**Example usage:** /tickets close ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## tickets -> create
+
+**Description:** Open a new ticket
+
+**Example usage:** /tickets create ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## util -> afk
+
+**Description:** Set yourself to afk/not-afk
+
+**Example usage:** /util afk ...
+
+**Options:** reason (STRING / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> avatar
+
+**Description:** View the avatar of a user
+
+**Example usage:** /util avatar ...
+
+**Options:** user (USER / Optional)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> bmi
+
+**Description:** Calculate your body mass index
+
+**Example usage:** /util bmi ...
+
+**Options:** height (NUMBER / Required), weight (NUMBER / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> bot-invite
+
+**Description:** Generate a bot invite URL for GhostyBot
+
+**Example usage:** /util bot-invite ...
+
+**Options:** N/A
+
+[Back to top](#ghostybot-command-list)
+
+## util -> bug-report
+
+**Description:** Report a bug to the bot developer
+
+**Example usage:** /util bug-report ...
+
+**Options:** text (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> calculate
+
+**Description:** Calculate something
+
+**Example usage:** /util calculate ...
+
+**Options:** calculation (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> ctgs
+
+**Description:** Create a shortened URL (ctgs.ga)
+
+**Example usage:** /util ctgs ...
+
+**Options:** slug (STRING / Required), url (STRING / Required)
+
+[Back to top](#ghostybot-command-list)
+
+## util -> define
+
+**Description:** Define something
+
+**Example usage:** /util define ...
+
+**Options:** word (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
 ## docs
 
-**Category:** util
+**Description:** Find something on the discord.js docs
 
-**Description:** Returns the request query from discord.js docs
+**Example usage:** /docs ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
+**Options:** query (STRING / Required), branch (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## emojiinfo
+## util -> emojis
 
-**Category:** util
+**Description:** View all emojis in this guild
 
-**Description:** Returns information about a custom emoji
+**Example usage:** /util emojis ...
 
-**Usage:** `N/A`
-
-**Aliases:** `emoji`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `emoji(string)`
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## emojis
+## util -> enlarge
 
-**Category:** util
+**Description:** Enlarge an emoji
 
-**Description:** Get a random color
+**Example usage:** /util enlarge ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** emoji (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## enlarge
+## util -> feedback
 
-**Category:** util
+**Description:** Send feedback to the bot developer
 
-**Description:** get your emoji enlarged
+**Example usage:** /util feedback ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `emoji(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## feedback
-
-**Category:** util
-
-**Description:** Give feedback about the bot
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `message(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## github
-
-**Category:** util
-
-**Description:** Search someone on github
-
-**Usage:** `N/A`
-
-**Aliases:** `gh`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `username(string)`
+**Options:** text (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
 ## help
 
-**Category:** util
+**Description:** Return more information about a command
 
-**Description:** Shows all commands Or shows more info about a command
+**Example usage:** /help ...
 
-**Usage:** `<category name | command name>`
-
-**Aliases:** `h`, `info`, `commands`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## randomimage
+## mdn
 
-**Category:** util
+**Description:** Find something on the MDN Web Docs.
 
-**Description:** Search any image you want from google
+**Example usage:** /mdn ...
 
-**Usage:** `N/A`
-
-**Aliases:** `imagesearch`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
+**Options:** query (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## imdb
+## util -> pastebin
 
-**Category:** util
+**Description:** Create a paste (pastebin.com)
 
-**Description:** Get the information about series and movie
+**Example usage:** /util pastebin ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
+**Options:** code (STRING / Required), extension (STRING / Optional), filename (STRING / Optional), expire-date (STRING / Optional)
 
 [Back to top](#ghostybot-command-list)
 
-## invite
+## ping
 
-**Category:** util
+**Description:** Returns the bot's ping
 
-**Description:** Creates an instant invite for the server
+**Example usage:** /ping ...
 
-**Usage:** `N/A`
-
-**Aliases:** `inv`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, CREATE_INSTANT_INVITE
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## ip
+## util -> poll
 
-**Category:** util
+**Description:** Create a poll in the current channel
 
-**Description:** Search an IP
+**Example usage:** /util poll ...
 
-**Usage:** `N/A`
-
-**Aliases:** `ip-lookup`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `ip(string)`
+**Options:** question (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## membercount
+## util -> roles
 
-**Category:** util
+**Description:** View all roles in this guild
 
-**Description:** N/A
+**Example usage:** /util roles ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## minecraft
+## util -> server-icon
 
-**Category:** util
+**Description:** View the icon of the current guild
 
-**Description:** Get info about a minecraft server
+**Example usage:** /util server-icon ...
 
-**Usage:** `N/A`
-
-**Aliases:** `mc`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `server-ip(string)`
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## morse
+## util -> suggest
 
-**Category:** util
+**Description:** Suggest something for this guild
 
-**Description:** Convert a string to morse code
+**Example usage:** /util suggest ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `text(string)`
+**Options:** text (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## nasanews
+## util -> translate
 
-**Category:** util
+**Description:** Translate something
 
-**Description:** Looks up an astronomy-related term on NASA's Website
+**Example usage:** /util translate ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
+**Options:** language (STRING / Required), sentence (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## npm
+## util -> uptime
 
-**Category:** util
+**Description:** View the uptime of the bot
 
-**Description:** Search packages on npm by their name
+**Example usage:** /util uptime ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## pastebin
-
-**Category:** util
-
-**Description:** Get a link of pastebin for your text
-
-**Usage:** `<extension (js, ts, ...)> <code>`
-
-**Aliases:** `paste`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `extension(string)`, `code(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## playstore
-
-**Category:** util
-
-**Description:** Show Playstore Application Information Of Your Given Name!
-
-**Usage:** `<Application Name>`
-
-**Aliases:** `ps`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `app(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## pokemon
-
-**Category:** util
-
-**Description:** Returns a pokemon information
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## poll
-
-**Category:** util
-
-**Description:** Create a poll
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `question(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## randomcolor
-
-**Category:** util
-
-**Description:** Get a random color
-
-**Usage:** `N/A`
-
-**Aliases:** `color`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## roleinfo
-
-**Category:** util
-
-**Description:** Shows info about a role
-
-**Usage:** `N/A`
-
-**Aliases:** `role`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `role(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## roles
-
-**Category:** util
-
-**Description:** Shows all roles from the guild
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## servericon
-
-**Category:** util
-
-**Description:** Shows the server icon
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## serverinfo
-
-**Category:** util
-
-**Description:** Get info about the server
-
-**Usage:** `N/A`
-
-**Aliases:** `guild`, `server`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## skin
-
-**Category:** util
-
-**Description:** Search for skins from Minecraft
-
-**Usage:** `N/A`
-
-**Aliases:** `minecraftskin`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `username(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## suggest
-
-**Category:** util
-
-**Description:** Create a suggestion
-
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `suggestion(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## translate
-
-**Category:** util
-
-**Description:** Translate a sentence
-
-**Usage:** `<language> <sentence>`
-
-**Aliases:** `tr`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `language(string)`, `text(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## uptime
-
-**Category:** util
-
-**Description:** Returns the uptime of the bot
-
-**Usage:** `N/A`
-
-**Aliases:** `up`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
-
-[Back to top](#ghostybot-command-list)
-
-## userinfo
-
-**Category:** util
-
-**Description:** Get user info
-
-**Usage:** `<user>`
-
-**Aliases:** `whois`, `user`, `u`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
 ## verify
 
-**Category:** util
+**Description:** Verify yourself to indicate you're not a bot and to get guild access.
 
-**Description:** Verify yourself to get guild access
+**Example usage:** /verify ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** N/A
+**Options:** N/A
 
 [Back to top](#ghostybot-command-list)
 
-## weather
+## util -> web
 
-**Category:** util
+**Description:** View a screenshot of a website
 
-**Description:** See the weather in a country/city
+**Example usage:** /util web ...
 
-**Usage:** `N/A`
-
-**Aliases:** N/A
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `country/city(string)`
+**Options:** url (STRING / Required)
 
 [Back to top](#ghostybot-command-list)
 
-## web
-
-**Category:** util
-
-**Description:** Returns a screenshot of the requested website
-
-**Usage:** `<url EG: https://google.com >`
-
-**Aliases:** `screenshot`, `webscreenshot`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES, ATTACH_FILES
-
-**Required Arguments:** `url(string)`
-
-[Back to top](#ghostybot-command-list)
-
-## wiki
-
-**Category:** util
+## util -> wiki
 
 **Description:** Search something up on Wikipedia
 
-**Usage:** `N/A`
+**Example usage:** /util wiki ...
 
-**Aliases:** `wikipediasearch`, `wikipedia`
-
-**Member Permissions:** None
-
-**Bot Permissions:** SEND_MESSAGES
-
-**Required Arguments:** `query(string)`
+**Options:** query (STRING / Required)
 
 [Back to top](#ghostybot-command-list)

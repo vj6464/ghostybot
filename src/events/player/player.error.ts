@@ -1,36 +1,23 @@
-import { Message } from "discord.js";
-import { Constants } from "discord-player";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
-
-type ErrorType = "UnableToJoin" | "NotConnected" | "NotPlaying" | "LiveVideo";
+import { TextChannel } from "discord.js";
+import { DisTubeError } from "distube";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class PlayerErrorEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.PlayerEvents.ERROR);
+    super(bot, "error");
   }
 
-  async execute(bot: Bot, error: ErrorType, message: Message) {
-    if (!message.guild?.available) return;
-    const lang = await bot.utils.getGuildLang(message.guild?.id);
+  async execute(bot: Bot, channel: TextChannel, error: DisTubeError<string>) {
+    if (!channel.guild.available) return;
+    if (!bot.utils.hasSendPermissions(channel)) return;
+    const lang = await bot.utils.getGuildLang(channel.guild.id);
 
-    switch (error) {
-      case "UnableToJoin": {
-        return message.channel.send(lang.MUSIC.JOIN_ERROR);
-      }
-      case "NotConnected": {
-        return message.channel.send(lang.MUSIC.MUST_BE_IN_VC);
-      }
-      case "NotPlaying": {
-        return message.channel.send(lang.MUSIC.NO_QUEUE);
-      }
-      case "LiveVideo": {
-        return message.channel.send(lang.MUSIC.LIVE_NOT_SUPPORTED);
-      }
-      default: {
-        bot.utils.sendErrorLog({ stack: error, name: "discord-player" }, "error");
-        return message.channel.send(lang.GLOBAL.ERROR);
-      }
+    if (lang.MUSIC.ERRORS[error.code]) {
+      return channel.send({ content: lang.MUSIC.ERRORS[error.code] });
     }
+
+    bot.utils.sendErrorLog(error, "error");
+    return channel.send({ content: lang.GLOBAL.ERROR });
   }
 }

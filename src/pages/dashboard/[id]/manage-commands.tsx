@@ -4,23 +4,32 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import fetch from "node-fetch";
-import AlertMessage from "@components/AlertMessage";
-import Guild from "types/Guild";
-import Loader from "@components/Loader";
+import { AlertMessage } from "@components/AlertMessage";
+import { Guild } from "types/Guild";
+import { Loader } from "@components/Loader";
+import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { SubCommandOptions } from "structures/Command/SubCommand";
+import { BaseCommandOptions } from "structures/Command/BaseCommand";
 
 interface Props {
   guild: Guild | null;
   isAuth: boolean;
-  botCommands: string[];
+  botCommands: (SubCommandOptions | BaseCommandOptions)[];
   error: string | undefined;
 }
 
 const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: Props) => {
   const router = useRouter();
   const [message, setMessage] = React.useState<string | null>(null);
-  const [filtered, setFiltered] = React.useState(botCommands);
+  const [filter, setFilter] = React.useState<string | null>(null);
   const [length, setLength] = React.useState(20);
+  const { t } = useTranslation(["guilds", "common"]);
+
+  const showSearch = React.useMemo(() => {
+    if (filter === null) return false;
+    return !["@enabled", "@disabled"].includes(filter);
+  }, [filter]);
 
   React.useEffect(() => {
     if (!isAuth) {
@@ -32,50 +41,40 @@ const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: 
   const lastRef = React.useCallback(
     (node) => {
       if (length > botCommands.length) return;
-      if (observer.current) observer.current?.disconnect();
+      if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           setLength((p) => p + 20);
         }
       });
-      if (node) observer.current?.observe(node);
+      if (node) observer.current.observe(node);
     },
     [length, botCommands],
   );
 
   React.useEffect(() => {
     const { query } = router;
-    setMessage((query?.message && `${query.message}`) || null);
+    setMessage((query.message && `${query.message}`) || null);
   }, [router]);
 
   function handleSearch(value: string) {
-    let filter: string[];
-
-    if (value === "@enabled") {
-      filter = botCommands.filter((cmd) => {
-        return !guild?.disabled_commands.find((c) => c === cmd);
-      });
-    } else if (value === "@disabled") {
-      filter = botCommands.filter((cmd) => {
-        return !!guild?.disabled_commands.find((c) => c === cmd);
-      });
+    if (!value) {
+      setFilter(null);
     } else {
-      filter = botCommands.filter((cmd) => cmd.toLowerCase().includes(value.toLowerCase()));
+      setFilter(value);
     }
-
-    setFiltered(filter);
   }
 
   async function updateCommand(type: string, cmdName: string) {
-    const data = await (
+    const data = (await (
       await fetch(`${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${guild?.id}/commands`, {
         method: "PUT",
         body: JSON.stringify({
           name: cmdName,
-          type: type,
+          type,
         }),
       })
-    ).json();
+    ).json()) as any;
 
     if (data.status === "success") {
       router.push(
@@ -101,11 +100,15 @@ const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: 
   return (
     <>
       <Head>
-        <title>Manage commands - {process.env["NEXT_PUBLIC_DASHBOARD_BOTNAME"]}</title>
+        <title>
+          {t("manage_commands")} - {process.env["NEXT_PUBLIC_DASHBOARD_BOTNAME"]}
+        </title>
       </Head>
       {message ? <AlertMessage type="success" message={message} /> : null}
       <div className="page-title">
-        <h4>{guild?.name} - Enable/disable commands</h4>
+        <h4>
+          {guild.name} - {t("manage_commands")}
+        </h4>
 
         <div>
           <Link href={`/dashboard/${guild.id}`}>
@@ -118,7 +121,7 @@ const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: 
 
       <div className="form-group">
         <label className="sr-only" htmlFor="search">
-          Search for commands
+          {t("search_for_commands")}
         </label>
         <input
           id="search"
@@ -129,26 +132,41 @@ const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: 
       </div>
 
       <div className="grid">
-        {filtered
-          ?.slice(0, length)
-          ?.filter((cmd) => !["help", "enable", "disable"].includes(cmd))
-          ?.map((cmd, idx) => {
-            const isDisabled = guild.disabled_commands?.find((c) => c === cmd);
-            return (
-              <div ref={lastRef} id={`${idx}`} key={cmd} className="card cmd-card">
-                <p>{cmd}</p>
+        {botCommands.slice(0, length).map((cmd, idx) => {
+          const topLevelName = "commandName" in cmd ? cmd.commandName : cmd.name;
+          const groupName = "groupName" in cmd ? cmd.groupName : null;
 
-                <div>
-                  <button
-                    onClick={() => updateCommand(isDisabled ? "enable" : "disable", cmd)}
-                    className="btn btn-secondary"
-                  >
-                    {isDisabled ? "Enable" : "Disable"}
-                  </button>
-                </div>
+          const fullName = groupName
+            ? `${topLevelName}-${groupName}-${cmd.name}`
+            : "commandName" in cmd
+            ? `${cmd.commandName}-${cmd.name}`
+            : cmd.name;
+
+          const isDisabled = guild.disabled_commands.includes(fullName);
+
+          if (filter === "@disabled" && !isDisabled) return null;
+          if (filter === "@enabled" && isDisabled) return null;
+
+          if (showSearch && !cmd.name.includes(filter!)) return null;
+
+          return (
+            <div ref={lastRef} id={`${idx}`} key={`${cmd.name}-${idx}`} className="card cmd-card">
+              <p>
+                {topLevelName}
+                {groupName ? ` -> ${groupName}` : null} {"->"} {cmd.name}
+              </p>
+
+              <div>
+                <button
+                  onClick={() => updateCommand(isDisabled ? "enable" : "disable", fullName)}
+                  className="btn btn-secondary"
+                >
+                  {isDisabled ? t("enable") : t("disable")}
+                </button>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     </>
   );
@@ -157,16 +175,17 @@ const ManageCommands: React.FC<Props> = ({ botCommands, guild, isAuth, error }: 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
 
-  const data = await (
+  const data = (await (
     await fetch(`${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${ctx.query.id}`, {
       headers: {
-        auth: cookies?.token,
+        auth: cookies.token,
       },
     })
-  ).json();
+  ).json()) as any;
 
   return {
     props: {
+      ...(await serverSideTranslations(ctx.locale!, ["guilds", "footer", "profile", "common"])),
       isAuth: data.error !== "invalid_token",
       botCommands: data.botCommands ?? [],
       guild: data?.guild ?? null,

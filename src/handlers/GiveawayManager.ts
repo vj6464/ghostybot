@@ -1,26 +1,32 @@
-import { GiveawayData, GiveawaysManager } from "discord-giveaways";
-import GiveawayModel from "models/Giveaway.model";
+import { GiveawaysManager } from "discord-giveaways";
+import { prisma } from "utils/prisma";
 
-export default class MongoGiveawayManager extends GiveawaysManager {
+export class MongoGiveawayManager extends GiveawaysManager {
   async getAllGiveaways() {
-    return GiveawayModel.find();
+    return prisma.giveaways.findMany() as any;
   }
 
-  async saveGiveaway(messageId: string, giveawayData: GiveawayData): Promise<boolean> {
-    await GiveawayModel.create(giveawayData);
+  async saveGiveaway(messageId: string, giveawayData: any) {
+    await prisma.giveaways.create({
+      data: { messageId, ...giveawayData },
+    });
 
     return true;
   }
 
-  async editGiveaway(messageId: string, giveawayData: GiveawayData): Promise<boolean> {
-    await GiveawayModel.findOneAndUpdate({ messageID: messageId }, giveawayData).exec();
+  async editGiveaway(messageId: string, giveawayData: any): Promise<boolean> {
+    await prisma.giveaways.updateMany({
+      where: { messageId },
+      data: giveawayData,
+    });
 
     return true;
   }
 
-  // @ts-expect-error ignore
   async deleteGiveaway(messageId: string): Promise<boolean> {
-    await GiveawayModel.findOneAndDelete({ messageID: messageId }).exec();
+    await prisma.giveaways.deleteMany({
+      where: { messageId },
+    });
 
     return true;
   }

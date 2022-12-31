@@ -1,56 +1,35 @@
-import { Client, Collection } from "discord.js";
-import { Lyrics } from "@discord-player/extractor";
+import * as DJS from "discord.js";
 import NekoClient from "nekos.life";
 import { Client as ImdbClient } from "imdb-api";
 import PasteClient from "pastebin-api";
-import AlexClient from "alexflipnote.js";
-import { Player } from "discord-player";
+import DistubePlayer from "distube";
 import { CtgsClient } from "ctgs.js";
-import EventHandler from "handlers/EventHandler";
+import { EventHandler } from "handlers/EventHandler";
+import { YtDlpPlugin } from "@distube/yt-dlp";
 
-import MongStarboardsManager from "handlers/StarboardsManager";
-import MongoGiveawayManager from "handlers/GiveawayManager";
-import Command from "./Command";
-import Logger from "handlers/Logger";
-import Util from "@utils/Util";
-import Interaction from "./Interaction";
+import { MongoGiveawayManager } from "handlers/GiveawayManager";
+import { logger } from "utils/logger";
+import { Util } from "utils/Util";
 import { discordConfig } from "@config/discord-config";
+import { SubCommand } from "./Command/SubCommand";
+import { Command } from "./Command/Command";
 
-class Bot extends Client {
-  commands: Collection<string, Command>;
-  aliases: Collection<string, string>;
-  interactions: Collection<string, Interaction>;
-  cooldowns: Collection<string, Collection<string, number>>;
-  logger: typeof Logger;
+export class Bot extends DJS.Client {
+  interactions: DJS.Collection<string, SubCommand | Command> = new DJS.Collection();
+
+  logger: typeof logger = logger;
   utils: Util;
-  neko: NekoClient;
+  neko: NekoClient = new NekoClient();
   imdb!: ImdbClient;
-  player: Player;
-  starboardsManager: MongStarboardsManager;
+  player: DistubePlayer;
   giveawayManager: MongoGiveawayManager;
-  alexClient!: AlexClient;
   pasteClient!: PasteClient;
-  ctgs: CtgsClient;
-
-  lyricsClient: {
-    search: (query: string) => Promise<Lyrics.LyricsData>;
-    client: unknown;
-  };
+  ctgs: CtgsClient = new CtgsClient();
 
   constructor() {
     super(discordConfig);
 
-    this.commands = new Collection();
-    this.aliases = new Collection();
-    this.interactions = new Collection();
-    this.cooldowns = new Collection();
-    this.logger = Logger;
     this.utils = new Util(this);
-    this.neko = new NekoClient();
-
-    if (process.env["ALEXFLIPNOTE_API_KEY"]) {
-      this.alexClient = new AlexClient(process.env["ALEXFLIPNOTE_API_KEY"]);
-    }
 
     if (process.env["PASTE_CLIENT_KEY"]) {
       this.pasteClient = new PasteClient(process.env["PASTE_CLIENT_KEY"]);
@@ -60,25 +39,18 @@ class Bot extends Client {
       this.imdb = new ImdbClient({ apiKey: process.env["IMDB_KEY"] });
     }
 
-    this.player = new Player(this, {
-      autoSelfDeaf: true,
+    this.player = new DistubePlayer(this, {
       leaveOnEmpty: true,
-      leaveOnEnd: true,
-      leaveOnStop: true,
-    });
-
-    this.ctgs = new CtgsClient();
-    this.lyricsClient = Lyrics.init();
-
-    this.starboardsManager = new MongStarboardsManager(this, {
-      storage: false,
-      translateClickHere: "Jump to message",
+      nsfw: false,
+      leaveOnFinish: true,
+      customFilters: {
+        cursed: "vibrato=f=6.5,tremolo,aresample=48000,asetrate=48000*1.25",
+      },
+      plugins: [new YtDlpPlugin({})],
     });
 
     this.giveawayManager = new MongoGiveawayManager(this, {
-      hasGuildMembersIntent: true,
-      updateCountdownEvery: 10000,
-
+      storage: undefined,
       default: {
         embedColor: "#5865f2",
         botsCanWin: false,
@@ -90,5 +62,3 @@ class Bot extends Client {
     new EventHandler(this).loadEvents();
   }
 }
-
-export default Bot;

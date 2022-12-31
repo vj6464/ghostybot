@@ -1,89 +1,105 @@
 import * as DJS from "discord.js";
-import dayJs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
+import { codeBlock, time } from "@discordjs/builders";
 import jwt from "jsonwebtoken";
-import Bot from "structures/Bot";
-import UserModel, { IUser, UserData } from "models/User.model";
-import WarningModal, { IWarning } from "models/Warning.model";
-import GuildModel, { GuildData, IGuild } from "models/Guild.model";
-import ApiRequest from "types/ApiRequest";
-import StickyModel, { Sticky } from "models/Sticky.model";
+import { Bot } from "structures/Bot";
+import { ApiRequest } from "types/ApiRequest";
+import { prisma } from "./prisma";
+import { Prisma } from "@prisma/client";
 
-dayJs.extend(utc);
-dayJs.extend(timezone);
-
-export interface ErrorLog {
-  name?: string;
-  stack?: string;
-  code?: string | number;
-  httpStatus?: string | number;
-}
-
-export default class Util {
+export class Util {
   bot: Bot;
 
   constructor(bot: Bot) {
     this.bot = bot;
   }
 
-  async getUserById(userId: string, guildId: string | undefined): Promise<IUser | undefined> {
-    try {
-      let user: IUser | undefined = await UserModel.findOne({ user_id: userId, guild_id: guildId });
+  get commandCount() {
+    let count = 0;
 
-      if (!user) {
-        user = await this.addUser(userId, guildId);
-      }
+    this.bot.interactions.forEach((interaction) => {
+      count += 1;
+
+      interaction.options.options?.forEach((option) => {
+        if (option.type === DJS.ApplicationCommandOptionType.Subcommand) {
+          count += 1;
+        }
+      });
+    });
+
+    return count;
+  }
+
+  getMe(data: { guild: DJS.Guild } | DJS.Guild | null | undefined) {
+    if (!data) return null;
+
+    if ("guild" in data) {
+      return data.guild?.members.me ?? null;
+    }
+
+    if ("members" in data) {
+      return data.members.me ?? null;
+    }
+
+    return null;
+  }
+
+  async getUserById(userId: string, guildId: string | undefined) {
+    if (!guildId) return null;
+
+    try {
+      const user =
+        (await prisma.users.findFirst({
+          where: { user_id: userId, guild_id: guildId },
+        })) ?? (await this.addUser(userId, guildId));
 
       return user;
-    } catch (e) {
-      this.bot.logger.error("GET_USER_BY_ID", e?.stack || e);
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async getUserWarnings(userId: string, guildId: string | undefined): Promise<IWarning[]> {
-    return WarningModal.find({ user_id: userId, guild_id: guildId });
-  }
-
-  async addWarning(userId: string, guildId: string | undefined, reason: string) {
-    try {
-      const warning = new WarningModal({ guild_id: guildId, user_id: userId, reason });
-
-      await warning.save();
-    } catch (e) {
-      this.bot.logger.error("ADD_WARNING", e?.stack || e);
-    }
+  async getUserWarnings(userId: string, guildId: string | undefined) {
+    return prisma.warnings.findMany({
+      where: { user_id: userId, guild_id: guildId },
+    });
   }
 
   async removeUserWarnings(userId: string, guildId: string | undefined) {
     try {
-      await WarningModal.deleteMany({ user_id: userId, guild_id: guildId });
-    } catch (e) {
-      this.bot.logger.error("REMOVE_USER_WARNINGS", e?.stack || e);
+      await prisma.warnings.deleteMany({
+        where: {
+          user_id: userId,
+          guild_id: guildId,
+        },
+      });
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async addUser(
-    userId: string,
-    guildId: string | undefined,
-    data?: Partial<UserData>,
-  ): Promise<IUser | undefined> {
-    try {
-      const user: IUser = new UserModel({ user_id: userId, guild_id: guildId, ...data });
+  async addUser(userId: string, guildId: string | undefined, data?: any) {
+    if (!guildId) return null;
 
-      await user.save();
+    try {
+      const user = await prisma.users.create({
+        data: {
+          user_id: userId,
+          guild_id: guildId,
+          ...data,
+        },
+      });
 
       return user;
-    } catch (e) {
-      this.bot.logger.error("ADD_USER", e?.stack || e);
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
   async updateUserById(
     userId: string,
     guildId: string | undefined,
-    data: Partial<UserData>,
-  ): Promise<void> {
+    data: Partial<Prisma.usersUpdateManyArgs["data"]>,
+  ) {
     try {
       const user = await this.getUserById(userId, guildId);
 
@@ -92,47 +108,59 @@ export default class Util {
         return;
       }
 
-      await UserModel.findOneAndUpdate({ user_id: userId, guild_id: guildId }, data);
-    } catch (e) {
-      console.error(e);
+      await prisma.users.updateMany({
+        where: { user_id: userId, guild_id: guildId },
+        data,
+      });
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async removeUser(userId: string, guildId: string): Promise<void> {
+  async removeUser(userId: string, guildId: string) {
     try {
-      await UserModel.findOneAndDelete({ user_id: userId, guild_id: guildId });
-    } catch (e) {
-      this.bot.logger.error("REMOVE_USER", e?.stack || e);
+      await prisma.users.deleteMany({
+        where: { user_id: userId, guild_id: guildId },
+      });
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async getGuildById(guildId: string | undefined): Promise<IGuild | undefined> {
-    try {
-      let guild = await GuildModel.findOne({ guild_id: guildId });
+  async getGuildById(guildId: string | undefined | null) {
+    if (!guildId) return null;
 
-      if (!guild) {
-        guild = await this.addGuild(guildId);
-      }
+    try {
+      const guild =
+        (await prisma.guilds.findFirst({
+          where: { guild_id: guildId },
+        })) ?? (await this.addGuild(guildId));
 
       return guild;
-    } catch (e) {
-      this.bot.logger.error("GET_GUILD_BY_ID", e.stack || e);
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async addGuild(guildId: string | undefined): Promise<IGuild | undefined> {
-    try {
-      const guild: IGuild = new GuildModel({ guild_id: guildId });
+  async addGuild(guildId: string | undefined) {
+    if (!guildId) return null;
 
-      await guild.save();
+    try {
+      const guild = await prisma.guilds.create({
+        data: {
+          guild_id: guildId,
+        },
+      });
 
       return guild;
-    } catch (e) {
-      this.bot.logger.error("ADD_GUILD", e?.stack || e);
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async updateGuildById(guildId: string | undefined, data: Partial<GuildData>) {
+  async updateGuildById(guildId: string | undefined, data: Partial<Prisma.guildsUpdateInput>) {
+    if (!guildId) return;
+
     try {
       // check if guild exists
       const guild = await this.getGuildById(guildId);
@@ -141,106 +169,152 @@ export default class Util {
         await this.addGuild(guildId);
       }
 
-      await GuildModel.findOneAndUpdate({ guild_id: guildId }, data);
-    } catch (e) {
-      console.error(e);
+      await prisma.guilds.updateMany({
+        where: { guild_id: guildId },
+        data,
+      });
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
   async removeGuild(guildId: string): Promise<void> {
     try {
-      await GuildModel.findOneAndDelete({ guild_id: guildId });
-    } catch (e) {
-      this.bot.logger.error("REMOVE_GUILD", e?.stack || e);
+      await prisma.guilds.deleteMany({ where: { guild_id: guildId } });
+    } catch (error) {
+      this.sendErrorLog(error, "error");
     }
   }
 
-  async sendErrorLog(error: ErrorLog, type: "warning" | "error"): Promise<void> {
-    /* eslint-disable-next-line */
-    if (error.stack?.includes('type: Value "voice" is not int.')) return;
-    if (error.stack?.includes("DeprecationWarning: Listening to events on the Db class")) return;
+  async sendErrorLog(err: unknown, type: "warning" | "error"): Promise<void> {
+    const error = err as DJS.DiscordAPIError | DJS.HTTPError | Error;
 
-    const channelId = process.env["ERRORLOGS_CHANNEL_ID"];
-    const channel = (this.bot.channels.cache.get(channelId ?? "") ||
-      (await this.bot.channels.fetch(channelId ?? ""))) as DJS.TextChannel;
+    try {
+      if (error.message.includes("Missing Access")) return;
+      if (error.message.includes("Unknown Message")) return;
+      if (error.stack?.includes("DeprecationWarning: Listening to events on the Db class")) {
+        return;
+      }
 
-    if (
-      (process.env.NODE_ENV !== "production" && !channel) ||
-      !channelId ||
-      !channel.permissionsFor(this.bot.user!)?.has("SEND_MESSAGES")
-    ) {
-      return this.bot.logger.error("UNHANDLED ERROR", error?.stack || `${error}`);
+      const channelId = process.env["ERRORLOGS_CHANNEL_ID"] as DJS.Snowflake | undefined;
+      if (!channelId) {
+        return this.bot.logger.error("ERR_LOG", error.stack || `${error}`);
+      }
+
+      const channel = (this.bot.channels.cache.get(channelId) ||
+        (await this.bot.channels.fetch(channelId))) as DJS.TextChannel;
+
+      if (
+        !channel ||
+        !channel.permissionsFor(this.bot.user!)?.has(DJS.PermissionFlagsBits.SendMessages)
+      ) {
+        return this.bot.logger.error("ERR_LOG", error.stack || `${error}`);
+      }
+
+      const message = {
+        author: this.bot.user,
+      };
+
+      const code = "code" in error ? error.code : "N/A";
+      const httpStatus = "status" in error ? error.status : "N/A";
+      const requestBody = "requestBody" in error ? error.requestBody : { json: {} };
+
+      const name = error.name || "N/A";
+      let stack = error.stack || error;
+      let jsonString: string | undefined = "";
+
+      try {
+        jsonString = JSON.stringify(requestBody.json, null, 2);
+      } catch {
+        jsonString = "";
+      }
+
+      if (jsonString.length >= 2048) {
+        jsonString = jsonString ? `${jsonString.slice(0, 2045)}...` : "";
+      }
+
+      if (typeof stack === "string" && stack.length >= 2048) {
+        console.error(stack);
+        stack = "An error occurred but was too long to send to Discord, check your console.";
+      }
+
+      const embed = this.baseEmbed(message)
+
+        .addFields(
+          { name: "Name", value: name, inline: true },
+          {
+            name: "Code",
+            value: code.toString(),
+            inline: true,
+          },
+          {
+            name: "httpStatus",
+            value: httpStatus.toString(),
+            inline: true,
+          },
+          { name: "Timestamp", value: this.bot.logger.now, inline: true },
+          { name: "Request data", value: codeBlock(jsonString.slice(0, 2045)) },
+        )
+        .setDescription(codeBlock(stack as string))
+        .setColor(type === "error" ? DJS.Colors.Red : DJS.Colors.Orange);
+
+      channel.send({ embeds: [embed] });
+    } catch (e) {
+      console.error({ error });
+      console.error(e);
     }
-
-    const message = {
-      author: this.bot.user,
-    };
-
-    const name = error.name || "N/A";
-    const code = error.code || "N/A";
-    const httpStatus = error.httpStatus || "N/A";
-    let stack = error.stack || error;
-
-    if (typeof stack === "string" && stack.length >= 2048) {
-      console.error(stack);
-      stack = "An error occurred but was too long to send to Discord, check your console.";
-    }
-
-    const embed = this.baseEmbed(message)
-      .setTitle("An error occurred")
-      .addField("Name", name, true)
-      .addField("Code", code, true)
-      .addField("httpStatus", httpStatus, true)
-      .addField("Timestamp", this.bot.logger.now, true)
-      .setDescription(`\`\`\`${stack}\`\`\` `)
-      .setColor(type === "error" ? "RED" : "ORANGE");
-
-    channel.send(embed);
   }
 
   async findMember(
-    message: Partial<DJS.Message>,
+    message: Partial<DJS.Message> | DJS.CommandInteraction,
     args: string[],
     options?: { allowAuthor?: boolean; index?: number },
   ): Promise<DJS.GuildMember | undefined | null> {
     if (!message.guild) return;
+    const index = options?.index ?? 0;
 
     try {
       let member: DJS.GuildMember | null | undefined;
-      const arg = args[options?.index ?? 0]?.replace?.(/[<@!>]/gi, "") || args[options?.index ?? 0];
+      const arg = (args[index]?.replace?.(/[<@!>]/gi, "") || args[index]) as DJS.Snowflake;
 
-      const mention = // check if the first mention is not the bot prefix
-        message.mentions?.users.first()?.id !== this.bot.user?.id
-          ? message.mentions?.users.first()
-          : message.mentions?.users.array()[1];
+      const mention =
+        "mentions" in message // check if the first mention is not the bot prefix
+          ? message.mentions?.users.first()?.id !== this.bot.user?.id
+            ? message.mentions?.users.first()
+            : message.mentions?.users.first(1)[1]
+          : null;
 
       member =
         message.guild.members.cache.find((m) => m.user.id === mention?.id) ||
         message.guild.members.cache.get(arg) ||
-        message.guild.members.cache.find((m) => m.user.id === args[options?.index ?? 0]) ||
-        (message.guild.members.cache.find(
-          (m) => m.user.tag === args[options?.index ?? 0],
-        ) as DJS.GuildMember);
+        message.guild.members.cache.find((m) => m.user.id === args[index]) ||
+        (message.guild.members.cache.find((m) => m.user.tag === args[index]) as DJS.GuildMember);
 
-      if (!member) {
-        member = await message.guild.members.fetch(arg)[0];
+      if (!member && arg) {
+        const fetched = await message.guild.members.fetch(arg).catch(() => null);
+
+        if (fetched) {
+          member = fetched;
+        }
       }
 
       if (!member && options?.allowAuthor) {
-        member = message.member;
+        // @ts-expect-error ignore
+        member = new DJS.GuildMember(this.bot, message.member!, message.guild);
       }
 
       return member;
     } catch (e) {
-      if (e?.includes?.("DiscordAPIError: Unknown Member")) {
-        return undefined;
-      } else {
-        this.sendErrorLog(e, "error");
-      }
+      const error = e instanceof Error ? e : null;
+
+      if (error?.message.includes("DiscordAPIError: Unknown Member")) return undefined;
+      if (error?.message.includes("is not a snowflake.")) return undefined;
+
+      this.sendErrorLog(e, "error");
     }
   }
 
-  async findRole(message: DJS.Message, arg: string): Promise<DJS.Role | null> {
+  async findRole(message: DJS.Message, arg: DJS.Snowflake): Promise<DJS.Role | null> {
     if (!message.guild) return null;
     return (
       message.mentions.roles.first() ||
@@ -252,126 +326,100 @@ export default class Util {
   }
 
   async getGuildLang(
-    guildId: string | undefined,
-  ): Promise<typeof import("../locales/english").default> {
+    guildId: string | undefined | null,
+  ): Promise<typeof import("@locales/english").default> {
     const guild = await this.getGuildById(guildId);
 
-    return import(`../locales/${guild?.locale}`).then((f) => f.default);
+    return import(`../locales/${guild?.locale ?? "english"}`).then((f) => f.default);
   }
 
-  async createWebhook(channelId: string, oldChannelId?: string) {
+  async createWebhook(channelId: DJS.Snowflake, oldChannelId: string | null) {
     const channel = this.bot.channels.cache.get(channelId);
     if (!channel) return;
     if (!this.bot.user) return;
-    if (!(channel as DJS.TextChannel).permissionsFor(this.bot.user?.id)?.has("MANAGE_WEBHOOKS")) {
+    if (
+      !(channel as DJS.TextChannel)
+        .permissionsFor(this.bot.user.id)
+        ?.has(DJS.PermissionFlagsBits.ManageWebhooks)
+    ) {
       return;
     }
 
     if (oldChannelId) {
       const webhooks = await (channel as DJS.TextChannel).fetchWebhooks();
-      webhooks.find((w) => w.name === `audit-logs-${oldChannelId}`)?.delete();
+      await webhooks.find((w) => w.name === `audit-logs-${oldChannelId}`)?.delete();
     }
 
-    await (channel as DJS.TextChannel).createWebhook(`audit-logs-${channelId}`, {
-      avatar: this.bot.user.displayAvatarURL({ format: "png" }),
+    await (channel as DJS.TextChannel).createWebhook({
+      name: `audit-logs-${channelId}`,
+      avatar: this.bot.user.displayAvatarURL({ extension: "png" }),
     });
   }
 
   async getWebhook(guild: DJS.Guild): Promise<DJS.Webhook | undefined> {
     if (!guild) return;
-    if (!guild.me) return;
-    if (!guild.me.permissions.has("MANAGE_WEBHOOKS")) return undefined;
+    const me = this.getMe(guild);
+    if (!me?.permissions.has(DJS.PermissionFlagsBits.ManageWebhooks)) return undefined;
 
-    const w = await guild.fetchWebhooks();
+    const webhooks = await guild.fetchWebhooks().catch(() => null);
+    if (!webhooks) return undefined;
+
     const g = await this.getGuildById(guild.id);
     if (!g) return undefined;
-    const webhook = w.find((w) => w.name === `audit-logs-${g?.audit_channel}`);
+
+    const webhook = webhooks.find((w) => w.name === `audit-logs-${g.audit_channel}`);
     if (!webhook) return undefined;
 
     return webhook;
   }
 
-  async findOrCreateMutedRole(guild: DJS.Guild): Promise<DJS.Role | undefined> {
-    const dbGuild = await this.getGuildById(guild.id);
-
-    return (
-      guild.roles.cache.find((r) => r.id === dbGuild?.muted_role_id) ||
-      guild.roles.cache.find((r) => r.name === "muted") ||
-      guild.roles.create({
-        name: "muted",
-        color: "GRAY",
-        reason: "Mute a user",
-      })
-    );
-  }
-
-  async createStarboard(
-    channel: { id: string | undefined; guild: { id: string | undefined } },
-    options,
-    old: { channelID: string | undefined; emoji: string | undefined },
-  ) {
-    if (old) {
-      old.channelID && old.emoji && this.bot.starboardsManager.delete(old.channelID, old.emoji);
-    }
-
-    this.bot.starboardsManager.create(channel as unknown as DJS.Channel, {
-      ...options,
-      selfStar: true,
-      starEmbed: true,
-      attachments: true,
-      resolveImageUrl: true,
-    });
-  }
-
-  async formatDate(date: string | Date | number | null, guildId: string | undefined) {
-    const tz = await (await this.getGuildById(guildId))?.timezone;
-    const m = dayJs.tz(`${date}`, tz || "America/New_York").format("MM/DD/YYYY, h:mm:ss a");
-
-    return {
-      date: m,
-      tz: tz,
-    };
-  }
-
   async updateMuteChannelPerms(
     guild: DJS.Guild,
     memberId: DJS.Snowflake,
-    perms: Partial<DJS.PermissionObject>,
+    perms: Partial<DJS.PermissionOverwriteOptions>,
   ) {
     guild.channels.cache.forEach((channel) => {
-      channel.updateOverwrite(memberId, perms).catch((e) => {
-        this.bot.logger.error("mute_user", e);
-      });
+      if (channel instanceof DJS.ThreadChannel) return;
+
+      channel.permissionOverwrites
+        .create(memberId, perms as DJS.PermissionOverwriteOptions)
+        .catch((e) => {
+          this.bot.logger.error("updateMuteChannelPerms", e);
+        });
     });
   }
 
   async addSticky(messageId: string, channelId: string, message: string) {
     try {
-      const sticky = new StickyModel({
-        message_id: messageId,
-        message,
-        channel_id: channelId,
+      await prisma.stickies.create({
+        data: {
+          message_id: messageId,
+          message,
+          channel_id: channelId,
+        },
       });
-
-      await sticky.save();
-    } catch (e) {
-      this.bot.logger.error("add_sticky", e?.stack || e);
+    } catch (error) {
+      this.bot.logger.error("add_sticky", error);
     }
   }
 
-  async getSticky(channelId: string): Promise<Sticky | undefined> {
+  async getSticky(channelId: string) {
     try {
-      const sticky = await StickyModel.findOne({ channel_id: channelId });
+      const sticky = await prisma.stickies.findFirst({
+        where: { channel_id: channelId },
+      });
 
       return sticky;
-    } catch (e) {
-      this.bot.logger.error("get_sticky", e?.stack || e);
+    } catch (error) {
+      this.bot.logger.error("get_sticky", error);
     }
   }
 
   async removeSticky(channelId: string) {
     try {
-      await StickyModel.findOneAndDelete({ channel_id: channelId });
+      await prisma.stickies.deleteMany({
+        where: { channel_id: channelId },
+      });
     } catch (e) {
       console.error(e);
     }
@@ -411,39 +459,46 @@ export default class Util {
     },
   ) {
     const token = req.cookies.token || req.headers.auth;
-    const data: { error: string } | { id: string } = await this.handleApiRequest("/users/@me", {
-      type: "Bearer",
-      data: `${token}`,
-    });
+    const data: { error: string } | { id: DJS.Snowflake } = await this.handleApiRequest(
+      "/users/@me",
+      {
+        type: "Bearer",
+        data: `${token}`,
+      },
+    );
 
     if ("error" in data) {
       return Promise.reject(data.error);
-    } else {
-      if (admin?.guildId) {
-        const guild = this.bot.guilds.cache.get(admin.guildId);
-        if (!guild) return Promise.reject("Guild was not found");
-
-        const member = await guild.members.fetch(data.id);
-        if (!member) return Promise.reject("Not in this guild");
-
-        if (!member.permissions.has("ADMINISTRATOR")) {
-          return Promise.reject("Not an administrator for this guild");
-        }
-      }
-      return Promise.resolve("Authorized");
     }
+
+    if (admin?.guildId) {
+      const guild = this.bot.guilds.cache.get(admin.guildId as DJS.Snowflake);
+      if (!guild) return Promise.reject("Guild was not found");
+
+      const member = await guild.members.fetch(data.id);
+      if (!member) return Promise.reject("Not in this guild");
+
+      if (!member.permissions.has(DJS.PermissionFlagsBits.Administrator)) {
+        return Promise.reject("Not an administrator for this guild");
+      }
+    }
+    return Promise.resolve("Authorized");
   }
 
-  errorEmbed(permissions: bigint[], message: DJS.Message, lang: Record<string, string>) {
+  errorEmbed(
+    permissions: bigint[],
+    message: DJS.Message | DJS.ChatInputCommandInteraction,
+    lang: Record<string, string>,
+  ) {
     return this.baseEmbed(message)
       .setTitle("Woah!")
       .setDescription(
         `❌ I need ${permissions
           .map((p) => {
             const perms: string[] = [];
-            Object.keys(DJS.Permissions.FLAGS).map((key) => {
-              if (DJS.Permissions.FLAGS[key] === p) {
-                perms.push(`\`${lang?.[key]}\``);
+            Object.keys(DJS.PermissionFlagsBits).map((key) => {
+              if (DJS.PermissionFlagsBits[key] === p) {
+                perms.push(`\`${lang[key]}\``);
               }
             });
 
@@ -451,14 +506,23 @@ export default class Util {
           })
           .join(", ")} permissions!`,
       )
-      .setColor("ORANGE");
+      .setColor(DJS.Colors.Orange);
   }
 
-  baseEmbed(message: DJS.Message | { author: DJS.User | null }): DJS.MessageEmbed {
-    const avatar = message.author?.displayAvatarURL({ dynamic: true });
+  baseEmbed(
+    message:
+      | DJS.Message
+      | DJS.ChatInputCommandInteraction
+      | DJS.SelectMenuInteraction
+      | { author: DJS.User | null },
+  ) {
+    const user = "author" in message ? message.author : message.user;
 
-    return new DJS.MessageEmbed()
-      .setFooter(message.author?.username, avatar)
+    const avatar = user?.displayAvatarURL();
+    const username = user?.username ?? this.bot.user?.username ?? "Unknown";
+
+    return new DJS.EmbedBuilder()
+      .setFooter({ text: username, iconURL: avatar })
       .setColor("#5865f2")
       .setTimestamp();
   }
@@ -471,14 +535,15 @@ export default class Util {
     return message
       .split(" ")
       .map((word) => {
-        const { username, tag, id, discriminator, createdAt } = user;
+        const { username, tag, id, discriminator } = user;
+        const createdAt = time(new Date(user.createdAt), "f");
         word = word
           .replace("{user}", `<@${id}>`)
           .replace("{user.tag}", this.escapeMarkdown(tag))
           .replace("{user.username}", this.escapeMarkdown(username))
           .replace("{user.discriminator}", discriminator)
           .replace("{user.id}", id)
-          .replace("{user.createdAt}", new Date(createdAt).toLocaleString());
+          .replace("{user.createdAt}", createdAt);
 
         if (msg) {
           if (!msg.guild) return word;
@@ -497,15 +562,106 @@ export default class Util {
       .join(" ");
   }
 
-  resolveCommand(nameOrAlias: string) {
-    return (
-      this.bot.commands.get(nameOrAlias) ??
-      this.bot.commands.get(this.bot.aliases.get(nameOrAlias)!)
-    );
+  isBotInSameChannel(message: DJS.Message | DJS.CommandInteraction) {
+    // @ts-expect-error ignore
+    const member = new DJS.GuildMember(this.bot, message.member!, message.guild!);
+    const voiceChannelId = member?.voice.channelId;
+
+    if (!voiceChannelId) return false;
+    if (!message.guild?.members.me) return false;
+
+    return message.guild.members.me.voice.channelId === voiceChannelId;
+  }
+
+  /**
+   * @returns `string` = doesn't have the required permissions, `undefined` = has the required permissions
+   */
+  formatBotPermissions(
+    permissions: bigint[],
+    interaction: DJS.ChatInputCommandInteraction,
+    lang: typeof import("@locales/english").default,
+  ) {
+    const neededPerms: bigint[] = [];
+
+    permissions.forEach((perm) => {
+      if (
+        !(interaction.channel as DJS.TextChannel)
+          .permissionsFor(interaction.guild!.members.me!)
+          .has(perm)
+      ) {
+        neededPerms.push(perm);
+      }
+    });
+
+    if (neededPerms.length > 0) {
+      return this.errorEmbed(neededPerms, interaction, lang.PERMISSIONS);
+    }
+  }
+
+  formatMemberPermissions(
+    permissions: bigint[],
+    interaction: DJS.CommandInteraction,
+    lang: typeof import("@locales/english").default,
+  ) {
+    const neededPerms: bigint[] = [];
+
+    permissions.forEach((perm) => {
+      if (
+        !(interaction.channel as DJS.TextChannel)
+          .permissionsFor(interaction.member as any)
+          .has(perm)
+      ) {
+        neededPerms.push(perm);
+      }
+    });
+
+    if (neededPerms.length > 0) {
+      return lang.MESSAGE.NEED_PERMS.replace(
+        "{perms}",
+        neededPerms
+          .map((p) => {
+            const perms: string[] = [];
+            Object.keys(DJS.PermissionFlagsBits).map((key) => {
+              if (DJS.PermissionFlagsBits[key] === p) {
+                perms.push(`\`${lang.PERMISSIONS[key]}\``);
+              }
+            });
+
+            return perms;
+          })
+          .join(", "),
+      );
+    }
+  }
+
+  translate<Str extends string, Values extends Record<string, string | number>>(
+    string: Str,
+    values: Values,
+  ): string {
+    const regex = /\{[a-z0-9_-]\w+\}/gi;
+    const keys = string.match(regex) ?? [];
+
+    keys.forEach((key) => {
+      const parsedKey = key.replace("{", "").replace("}", "");
+      const value = values[parsedKey];
+      string = string.replaceAll(key, String(value)) as Str;
+    });
+
+    return string;
+  }
+
+  hasSendPermissions(resolveable: DJS.Message | DJS.GuildTextBasedChannel) {
+    const ch = "channel" in resolveable ? resolveable.channel : resolveable;
+    if (!("permissionsFor" in ch)) return false;
+    if (ch instanceof DJS.ThreadChannel || ch instanceof DJS.DMChannel) {
+      return true;
+    }
+
+    return ch.permissionsFor(this.bot.user!)?.has(DJS.PermissionFlagsBits.SendMessages);
   }
 
   escapeMarkdown(message: string): string {
-    return DJS.Util.escapeMarkdown(message, {
+    return DJS.escapeMarkdown(message, {
       codeBlock: true,
       spoiler: true,
       inlineCode: true,
@@ -514,15 +670,19 @@ export default class Util {
     });
   }
 
+  codeContent(string: string, extension = ""): string {
+    return `\`\`\`${extension}\n${string}\`\`\``;
+  }
+
   calculateXp(xp: number): number {
     return Math.floor(0.1 * Math.sqrt(xp));
   }
 
   formatNumber(n: number | string): string {
-    return n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    return Number.parseFloat(String(n)).toLocaleString("be-BE");
   }
 
-  encode(obj: { [key: string]: unknown }) {
+  encode(obj: Record<string, unknown>) {
     let string = "";
 
     for (const [key, value] of Object.entries(obj)) {
@@ -531,9 +691,5 @@ export default class Util {
     }
 
     return string.substring(1);
-  }
-
-  toCapitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }

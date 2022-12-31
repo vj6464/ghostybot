@@ -1,25 +1,25 @@
-import { Constants, GuildMember } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class GuildMemberUpdateEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.GUILD_MEMBER_UPDATE);
+    super(bot, "guildMemberUpdate");
   }
 
-  async execute(bot: Bot, oldMember: GuildMember, newMember: GuildMember) {
+  async execute(bot: Bot, oldMember: DJS.GuildMember, newMember: DJS.GuildMember) {
     try {
       if (!newMember.guild || !oldMember.guild) return;
       if (!newMember.guild.available || !oldMember.guild.available) return;
       const guild = await bot.utils.getGuildById(newMember.guild.id);
       if (!guild) return;
-      if (!guild.welcome_data.enabled) return;
+      if (!guild.welcome_data?.enabled) return;
       const welcomeData = guild.welcome_data;
 
       // member passed membership screening
       if (oldMember.pending && !newMember.pending) {
-        if (welcomeData.role_id) {
-          if (!newMember.guild.me?.permissions.has("MANAGE_ROLES")) return;
+        const me = bot.utils.getMe(newMember);
+        if (welcomeData.role_id && me?.permissions.has(DJS.PermissionFlagsBits.ManageRoles)) {
           newMember.roles.add(welcomeData.role_id);
         }
       }

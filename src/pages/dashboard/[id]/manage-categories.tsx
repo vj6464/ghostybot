@@ -2,13 +2,14 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import * as React from "react";
 import Head from "next/head";
-import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import AlertMessage from "@components/AlertMessage";
-import categories from "data/categories.json";
-import Guild from "types/Guild";
-import Loader from "@components/Loader";
+import { AlertMessage } from "@components/AlertMessage";
+import categories from "assets/json/categories.json";
+import { Guild } from "types/Guild";
+import { Loader } from "@components/Loader";
+import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 interface Props {
   guild: Guild | null;
@@ -20,6 +21,8 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
   const router = useRouter();
   const [message, setMessage] = React.useState<string | null>(null);
   const [filtered, setFiltered] = React.useState(categories);
+  const { t } = useTranslation("guilds");
+  const { t: commonT } = useTranslation("common");
 
   React.useEffect(() => {
     if (!isAuth) {
@@ -29,7 +32,7 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
 
   React.useEffect(() => {
     const { query } = router;
-    setMessage((query?.message && `${query.message}`) || null);
+    setMessage((query.message && `${query.message}`) || null);
   }, [router]);
 
   function handleSearch(value: string) {
@@ -51,18 +54,18 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
   }
 
   async function updateCategory(type: string, category: string) {
-    const data = await (
+    const data = (await (
       await fetch(
         `${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${guild?.id}/categories`,
         {
           method: "PUT",
           body: JSON.stringify({
             name: category,
-            type: type,
+            type,
           }),
         },
       )
-    ).json();
+    ).json()) as any;
 
     if (data.status === "success") {
       router.push(
@@ -88,16 +91,20 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
   return (
     <>
       <Head>
-        <title>Manage categories - {process.env["NEXT_PUBLIC_DASHBOARD_BOTNAME"]}</title>
+        <title>
+          {t("manage_categories")} - {process.env["NEXT_PUBLIC_DASHBOARD_BOTNAME"]}
+        </title>
       </Head>
       {message ? <AlertMessage type="success" message={message} /> : null}
       <div className="page-title">
-        <h4>{guild?.name} - Enable/disable categories</h4>
+        <h4>
+          {guild.name} - {t("manage_categories")}
+        </h4>
 
         <div>
           <Link href={`/dashboard/${guild.id}`}>
             <a href={`/dashboard/${guild.id}`} className="btn btn-primary">
-              Return
+              {commonT("return")}
             </a>
           </Link>
         </div>
@@ -105,7 +112,7 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
 
       <div className="form-group">
         <label className="sr-only" htmlFor="search">
-          Search for categories
+          {t("search_for_categories")}
         </label>
         <input
           id="search"
@@ -117,9 +124,9 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
 
       <div className="grid">
         {filtered
-          ?.filter((category) => !["botowner", "exempt", "disabled", "custom"].includes(category))
-          ?.map((category, idx) => {
-            const isDisabled = guild.disabled_categories?.find((c) => c === category);
+          .filter((category) => !["botowner", "exempt", "disabled", "custom"].includes(category))
+          .map((category, idx) => {
+            const isDisabled = guild.disabled_categories.find((c) => c === category);
             return (
               <div id={`${idx}`} key={category} className="card cmd-card">
                 <p>{category}</p>
@@ -129,7 +136,7 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
                     onClick={() => updateCategory(isDisabled ? "enable" : "disable", category)}
                     className="btn btn-secondary"
                   >
-                    {isDisabled ? "Enable" : "Disable"}
+                    {isDisabled ? t("enable") : t("disable")}
                   </button>
                 </div>
               </div>
@@ -143,16 +150,17 @@ const ManageCategories = ({ guild, isAuth, error }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
 
-  const data = await (
+  const data = (await (
     await fetch(`${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}/api/guilds/${ctx.query.id}`, {
       headers: {
-        auth: cookies?.token,
+        auth: cookies.token,
       },
     })
-  ).json();
+  ).json()) as any;
 
   return {
     props: {
+      ...(await serverSideTranslations(ctx.locale!, ["guilds", "footer", "profile", "common"])),
       isAuth: data.error !== "invalid_token",
       guild: data?.guild ?? null,
       error: data?.error ?? null,

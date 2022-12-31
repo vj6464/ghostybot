@@ -1,8 +1,8 @@
-import fetch from "node-fetch";
+import type { RESTPostOAuth2AccessTokenResult } from "discord-api-types/v10";
 import jwt from "jsonwebtoken";
 import { NextApiResponse } from "next";
 import { setCookie } from "nookies";
-import ApiRequest from "types/ApiRequest";
+import { ApiRequest } from "types/ApiRequest";
 
 export default async function handler(req: ApiRequest, res: NextApiResponse) {
   const { query } = req;
@@ -23,7 +23,7 @@ export default async function handler(req: ApiRequest, res: NextApiResponse) {
     return res.redirect(`/error?error=${encodeURIComponent("No code was provided")}`);
   }
 
-  const data = await (
+  const data = (await (
     await fetch(
       `${discordApiUrl}oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${callbackUrl}`,
       {
@@ -33,13 +33,13 @@ export default async function handler(req: ApiRequest, res: NextApiResponse) {
           client_id: DISCORD_CLIENT_ID,
           client_secret: DISCORD_CLIENT_SECRET,
           grant_type: "authorization_code",
-          code: code,
+          code,
           redirect_uri: callbackUrl,
           scope: "identify guilds",
         }),
       },
     )
-  ).json();
+  ).json()) as RESTPostOAuth2AccessTokenResult;
 
   if (!data.access_token) {
     return res.redirect(

@@ -1,15 +1,12 @@
-import { Constants } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
-import BotModel from "models/Bot.model";
-import HelperHandler from "handlers/HelperHandler";
-import FeatureHandler from "handlers/FeatureHandler";
-import InteractionHandler from "handlers/InteractionHandler";
-import CommandHandler from "handlers/CommandHandler";
+import * as DJS from "discord.js";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
+import { HelperHandler } from "handlers/HelperHandler";
+import { InteractionHandler } from "handlers/InteractionHandler";
 
 export default class ReadyEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.CLIENT_READY);
+    super(bot, "ready", true);
   }
 
   async execute(bot: Bot) {
@@ -18,34 +15,49 @@ export default class ReadyEvent extends Event {
     const userCount = bot.utils.formatNumber(
       bot.guilds.cache.reduce((a, g) => a + g.memberCount, 0),
     );
-    const statuses = [
-      ` ${serverCount} servers.`,
-      `!help | ${channelCount} channels`,
-      `${userCount} users`,
-      "!help | https://ghostybot.tk",
+
+    const statuses: {
+      type: DJS.ActivityType.Listening | DJS.ActivityType.Watching;
+      value: string;
+    }[] = [
+      {
+        type: DJS.ActivityType.Listening,
+        value: "/help",
+      },
+      {
+        type: DJS.ActivityType.Watching,
+        value: `${userCount} users`,
+      },
+      {
+        type: DJS.ActivityType.Watching,
+        value: `${serverCount} servers`,
+      },
+      {
+        type: DJS.ActivityType.Watching,
+        value: "https://discord.gg/XxHrtkA",
+      },
+      {
+        type: DJS.ActivityType.Watching,
+        value: "https://ghostybot.caspertheghost.me",
+      },
     ];
 
-    new HelperHandler(bot).loadHelpers();
-    new FeatureHandler(bot).loadFeatures();
-    new InteractionHandler(bot).loadInteractions();
-    new CommandHandler(bot).loadCommands();
+    await new HelperHandler(bot).loadHelpers();
+    await new InteractionHandler(bot).loadInteractions();
 
-    const botData = await BotModel.findOne({ bot_id: bot?.user?.id });
-
-    if (!botData) {
-      BotModel.create({ bot_id: bot?.user?.id });
-    } else {
-      botData.used_since_up = 0;
-      await botData.save();
+    if (process.env["DEV_MODE"] === "true") {
+      void import("@scripts/generateCommandList").then((v) => v.default(this.bot));
     }
 
     bot.logger.log(
       "bot",
       `Bot is running with ${channelCount} channels, ${userCount} users and ${serverCount} servers`,
     );
+
     setInterval(() => {
       const status = statuses[Math.floor(Math.random() * statuses.length)];
-      bot?.user?.setActivity(status, { type: "WATCHING" });
-    }, 60000);
+
+      bot.user?.setActivity(status.value, { type: status.type! });
+    }, 60_000);
   }
 }

@@ -1,7 +1,6 @@
 import { NextApiResponse } from "next";
-import fetch from "node-fetch";
 import { setCookie } from "nookies";
-import ApiRequest from "types/ApiRequest";
+import { ApiRequest } from "types/ApiRequest";
 
 export default async function (req: ApiRequest, res: NextApiResponse) {
   const token = req.cookies.token;
@@ -12,7 +11,7 @@ export default async function (req: ApiRequest, res: NextApiResponse) {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: req.bot.utils.encode({
-      token: token,
+      token,
       client_id: DISCORD_CLIENT_ID,
       client_secret: DISCORD_CLIENT_SECRET,
     }),

@@ -1,14 +1,12 @@
-import { Constants } from "discord.js";
-import Bot from "structures/Bot";
-import Event from "structures/Event";
-import { ErrorLog } from "@utils/Util";
+import { Bot } from "structures/Bot";
+import { Event } from "structures/Event";
 
 export default class ErrorEvent extends Event {
   constructor(bot: Bot) {
-    super(bot, Constants.Events.ERROR);
+    super(bot, "error");
   }
 
-  async execute(_: Bot, error: ErrorLog) {
-    this.bot.utils.sendErrorLog(error, "error");
+  async execute(bot: Bot, error: Error) {
+    return bot.utils.sendErrorLog(error, "error");
   }
 }
